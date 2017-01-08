@@ -30,11 +30,6 @@ class AppNavigator extends Component {
     }),
   }
 
-  constructor(props) {
-    super(props)
-    console.log('AppNavigator props ', props)
-  }
-
   componentDidMount = () => {
     BackAndroid.addEventListener('hardwareBackPress', () => {
       const routes = this.props.navigation.routes;
@@ -92,7 +87,7 @@ class AppNavigator extends Component {
             shadowRadius: 3,
           },
         }}
-        tweenHandler={(ratio) => {  //eslint-disable-line
+        tweenHandler={(ratio) => {
           return {
             drawer: { shadowRadius: ratio < 0.2 ? ratio * 5 * 5 : 5 },
             main: {
@@ -121,7 +116,7 @@ function mapDispatchToProps(dispatch) {
 
 const mapStateToProps = state => ({
   drawerState: state.drawer.drawerState,
-  navigation: state.cardNavigation,
+  navigation: state.navigation,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AppNavigator)

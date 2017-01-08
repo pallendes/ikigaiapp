@@ -20,8 +20,8 @@ class ProductsContainer extends Component {
   componentWillMount = () => this.props.showProducts()
 
   goToDetail = (productId) => {
-    // const { dispatch, navigation } = this.props;
-    // dispatch(pushRoute({ key: 'productDetailContainer' }, navigation.key));
+    const { dispatch, navigation } = this.props;
+    dispatch(pushRoute({ key: 'productDetailContainer' }, navigation.key));
   }
 
   openDrawer = () => {
@@ -47,12 +47,20 @@ class ProductsContainer extends Component {
   }
 }
 
+// function mapDispatchToProps(dispatch) {
+//   return {
+//     dispatch,
+//     showProducts,
+//     showProductDetail
+//   }
+// }
+
 mapDispatchToProps = ({
   showProducts,
   showProductDetail
 })
 
-mapStateToProps = state => ({
+const mapStateToProps = state => ({
    products: state.products.productList,
  })
 
