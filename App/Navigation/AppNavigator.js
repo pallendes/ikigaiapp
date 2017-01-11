@@ -8,11 +8,10 @@ import { BackAndroid, StatusBar, NavigationExperimental } from 'react-native';
 
 import ProductsContainer from '../Containers/ProductsContainer'
 import ProductDetailContainer from '../Containers/ProductDetailContainer'
+import UserContainer from '../Containers/UserContainer'
+import NewProductContainer from '../Containers/NewProductContainer'
 
-const {
-  popRoute,
-  pushRoute,
-} = actions;
+const { popRoute, pushRoute, } = actions;
 
 const {
   CardStack: NavigationCardStack
@@ -32,37 +31,52 @@ class AppNavigator extends Component {
 
   componentDidMount = () => {
     BackAndroid.addEventListener('hardwareBackPress', () => {
-      const routes = this.props.navigation.routes;
+      const routes = this.props.navigation.routes
 
       if (routes[routes.length - 1].key === 'home' || routes[routes.length - 1].key === 'login') {
-        return false;
+        return false
       }
 
       this.props.popRoute(this.props.navigation.key);
-      return true;
+      return true
     });
   }
 
+  componentDidUpdate = () => {
+
+    if (this.props.drawerState === 'opened') {
+      this.openDrawer()
+    }
+
+    if (this.props.drawerState === 'closed') {
+      this._drawer.close()
+    }
+  }
+
   popRoute = () => {
-    this.props.popRoute();
+    this.props.popRoute()
   }
 
   openDrawer = () => {
-    this._drawer.open();
+    this._drawer.open()
   }
 
   closeDrawer = () => {
     if (this.props.drawerState === 'opened') {
-      this.props.closeDrawer();
+      this.props.closeDrawer()
     }
   }
 
-  _renderScene = (props) => { // eslint-disable-line class-methods-use-this
+  _renderScene = (props) => {
     switch (props.scene.route.key) {
       case 'productsContainer':
         return <ProductsContainer />;
-          case 'productsContainer':
-            return <ProductDetailContainer />;
+      case 'productDetailContainer':
+        return <ProductDetailContainer {...props.scene.route.passProps}/>;
+      case 'userRegistry':
+        return <UserContainer />
+      case 'newProductContainer':
+        return <NewProductContainer />
       default :
         return <ProductsContainer />;
     }
@@ -74,7 +88,7 @@ class AppNavigator extends Component {
         ref={(ref) => { this._drawer = ref; }}
         type="overlay"
         tweenDuration={150}
-        content={null}
+        content={<DrawerSideBar />}
         tapToClose
         acceptPan={false}
         onClose={() => this.closeDrawer()}
@@ -107,12 +121,15 @@ class AppNavigator extends Component {
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    closeDrawer: () => dispatch(closeDrawer()),
-    popRoute: key => dispatch(popRoute(key)),
-  };
+const drawerStyles = {
+  drawer: { shadowColor: '#000000', shadowOpacity: 0.8, shadowRadius: 3},
+  main: {paddingLeft: 3},
 }
+
+const mapDispatchToProps = (dispatch) => ({
+    closeDrawer: () => dispatch(closeDrawer()),
+    popRoute: key => dispatch(popRoute(key))
+})
 
 const mapStateToProps = state => ({
   drawerState: state.drawer.drawerState,

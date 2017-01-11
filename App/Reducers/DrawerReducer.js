@@ -1,7 +1,7 @@
 import { OPEN_DRAWER, CLOSE_DRAWER } from '../Actions/DrawerActions'
 
 const initialState = {
-  drawerState: 'opened'
+  drawerState: 'closed'
 }
 
 export const toggleDrawer = (state = initialState, action) => {

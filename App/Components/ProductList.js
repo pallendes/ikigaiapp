@@ -1,7 +1,7 @@
 import React, { PropTypes, Component } from 'react'
 import { List } from 'native-base'
 import Product from './ProductItem'
-import { Actions } from 'react-native-router-flux'
+// import { Actions } from 'react-native-router-flux'
 
 class ProductList extends Component {
 

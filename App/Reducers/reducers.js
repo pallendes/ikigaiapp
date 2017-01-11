@@ -7,5 +7,6 @@ import cardNavigation from './CardStackReducer'
 export default combineReducers({
         products: showProducts,
         navigation: cardNavigation,
-        drawer: toggleDrawer
+        drawer: toggleDrawer,
+        product: showProductDetail
     })
