@@ -34,6 +34,7 @@
 		37BDAFBBC4764C67938C3F78 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5718C5BB8E2D4995AA9F75C8 /* SimpleLineIcons.ttf */; };
 		F77D1B2A3DE54CC7AEFFCCEA /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2B712C22F3754630B36ACB75 /* Zocial.ttf */; };
 		59716723AA2E426FAF52B924 /* libRCTCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B1BD46B85B53450DABAAACD8 /* libRCTCamera.a */; };
+		8A5F0E330F1145ABB39CB748 /* libimageCropPicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5101E492A91B4161B2603895 /* libimageCropPicker.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -166,6 +167,8 @@
 		2B712C22F3754630B36ACB75 /* Zocial.ttf */ = {isa = PBXFileReference; name = "Zocial.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		B8944610363C4220B041F172 /* RCTCamera.xcodeproj */ = {isa = PBXFileReference; name = "RCTCamera.xcodeproj"; path = "../node_modules/react-native-camera/ios/RCTCamera.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		B1BD46B85B53450DABAAACD8 /* libRCTCamera.a */ = {isa = PBXFileReference; name = "libRCTCamera.a"; path = "libRCTCamera.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		18BC896478484FBA9D7BE661 /* ImageCropPicker.xcodeproj */ = {isa = PBXFileReference; name = "ImageCropPicker.xcodeproj"; path = "../node_modules/react-native-image-crop-picker/ios/ImageCropPicker.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		5101E492A91B4161B2603895 /* libimageCropPicker.a */ = {isa = PBXFileReference; name = "libimageCropPicker.a"; path = "libimageCropPicker.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -194,6 +197,7 @@
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				BE039F80C9BD41A1A20E3801 /* libRNVectorIcons.a in Frameworks */,
 				59716723AA2E426FAF52B924 /* libRCTCamera.a in Frameworks */,
+				8A5F0E330F1145ABB39CB748 /* libimageCropPicker.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -328,6 +332,7 @@
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
 				21591D2A6E5F42AF919B6629 /* RNVectorIcons.xcodeproj */,
 				B8944610363C4220B041F172 /* RCTCamera.xcodeproj */,
+				18BC896478484FBA9D7BE661 /* ImageCropPicker.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -688,6 +693,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 			};
 			name = Debug;
@@ -704,6 +710,7 @@
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Ikigai.app/Ikigai";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
@@ -785,6 +792,7 @@
 					"$(SRCROOT)/../node_modules/react-native/ReactCommon/**",
 					"$(SRCROOT)\..\node_modules\react-native-vector-icons\RNVectorIconsManager",
 					"$(SRCROOT)\..\node_modules\react-native-camera\ios",
+					"$(SRCROOT)\..\node_modules\react-native-image-crop-picker\ios/**",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -827,6 +835,7 @@
 					"$(SRCROOT)/../node_modules/react-native/ReactCommon/**",
 					"$(SRCROOT)\..\node_modules\react-native-vector-icons\RNVectorIconsManager",
 					"$(SRCROOT)\..\node_modules\react-native-camera\ios",
+					"$(SRCROOT)\..\node_modules\react-native-image-crop-picker\ios/**",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;

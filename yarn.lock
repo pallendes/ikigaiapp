@@ -3013,6 +3013,10 @@ react-native-easy-grid@0.1.7:
   dependencies:
     lodash "^4.11.1"
 
+react-native-image-crop-picker@^0.11.2:
+  version "0.11.2"
+  resolved "https://registry.yarnpkg.com/react-native-image-crop-picker/-/react-native-image-crop-picker-0.11.2.tgz#bf68d48b970b4490561760b2671db611f32fe3ed"
+
 react-native-keyboard-aware-scroll-view@0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/react-native-keyboard-aware-scroll-view/-/react-native-keyboard-aware-scroll-view-0.2.0.tgz#d9a94b358cbf92693750b16b4364d64d70060f20"
