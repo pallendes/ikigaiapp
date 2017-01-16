@@ -4,11 +4,20 @@ import { connect } from 'react-redux'
 import navigateTo from '../Actions/SideBarNav'
 import { launchCamera, pictureTaken, closeCamera } from '../Actions/CameraActions'
 import _Camera from '../Components/_Camera'
+import ImagePicker from 'react-native-image-crop-picker'
+import { List, ListItem, Text } from 'native-base'
 
 class NewProductContainer extends Component {
 
   constructor(props) {
     super(props)
+    this.state = {
+      modalOpen: false
+    }
+  }
+
+  setNativeProps(nativeProps) {
+    this._root.setNativeProps(nativeProps);
   }
 
   goBack = () => {
@@ -25,23 +34,45 @@ class NewProductContainer extends Component {
       .catch(err => console.log(err))
   }
 
-  handleNewPicture = () => {
-    this.props.launchCamera()
+  handleNewPicture = (from) => {
+    this.closeModal()
+    if (from === 'camera') {
+      ImagePicker.openCamera({
+        width: 300,
+        height: 400
+      }).then(image => {
+        this.props.pictureTaken(image.path)
+      });
+    } else {
+      ImagePicker.openPicker({})
+        .then(image => {
+          this.props.pictureTaken(image.path)
+        });
+    }
+  }
+
+  openModal = () => {
+    this.setState({
+      modalOpen: true
+    })
+  }
+
+  closeModal = () => {
+    this.setState({
+      modalOpen: false
+    })
   }
 
   render() {
-
-    if (this.props.cameraState === 'opened') {
-      return <_Camera takePicture={this.takePicture}/>
-    } else {
-      return (
-        <NewProduct
-          goBack={this.goBack}
-          handleNewPicture={this.handleNewPicture}
-          pictureUri={this.props.pictureUri}/>
-      )
-    }
-
+    return (
+      <NewProduct
+        goBack={this.goBack}
+        handleNewPicture={this.handleNewPicture}
+        pictureUri={this.props.pictureUri}
+        openModal={this.openModal}
+        closeModal={this.closeModal}
+        {...this.state} />
+    )
   }
 
 }

@@ -11,8 +11,15 @@ import { Container,
   Thumbnail,
   Header,
   Title } from 'native-base'
+import { TouchableHighlight, Image } from 'react-native'
+import { View } from 'native-base'
+import PickerSelector from './PickerSelector'
 
-const UserRegistry = ({goBack}) => {
+const UserRegistry = ({goBack, handleNewPicture, openModal, closeModal, ...props}) => {
+
+  let pictureUri = props.pictureUri === ''
+    ? require('../Images/Photo-not-available.png') : {uri: props.pictureUri}
+
   return (
     <Container>
       <Header>
@@ -24,38 +31,50 @@ const UserRegistry = ({goBack}) => {
           <Icon name='ios-menu' />
         </Button>
       </Header>
-      <Content>
-        <List>
-          <ListItem>
-            <Thumbnail size={120} source={require('../Images/Photo-not-available.png')} />
-          </ListItem>
-          <ListItem>
-            <InputGroup>
-              <Input inlineLabel label="First Name" placeholder="John" />
-            </InputGroup>
-          </ListItem>
-          <ListItem>
-            <InputGroup>
-              <Input inlineLabel label="Last Name" placeholder="Doe" />
-            </InputGroup>
-          </ListItem>
-          <ListItem>
-            <InputGroup>
-              <Icon name="ios-person" style={{ color: '#0A69FE' }} />
-              <Input placeholder="EMAIL" />
-            </InputGroup>
-          </ListItem>
-          <ListItem>
-            <InputGroup>
-              <Icon name="ios-unlock" style={{ color: '#0A69FE' }} />
-              <Input placeholder="PASSWORD" secureTextEntry />
-            </InputGroup>
-          </ListItem>
-          <Button style={{ alignSelf: 'center', marginTop: 20, marginBottom: 20 }}>
-            Sign Up
-          </Button>
-        </List>
-      </Content>
+      <View>
+        <Content>
+          <List>
+            <ListItem>
+              <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                <TouchableHighlight onPress={() => openModal()}>
+                  <Image
+                    style={{width: 120, height: 120, borderRadius: 60}}
+                    source={pictureUri}/>
+                </TouchableHighlight>
+              </View>
+            </ListItem>
+            <ListItem>
+              <InputGroup>
+                <Input inlineLabel label="First Name" placeholder="John" />
+              </InputGroup>
+            </ListItem>
+            <ListItem>
+              <InputGroup>
+                <Input inlineLabel label="Last Name" placeholder="Doe" />
+              </InputGroup>
+            </ListItem>
+            <ListItem>
+              <InputGroup>
+                <Icon name="ios-person" style={{ color: '#0A69FE' }} />
+                <Input placeholder="EMAIL" />
+              </InputGroup>
+            </ListItem>
+            <ListItem>
+              <InputGroup>
+                <Icon name="ios-unlock" style={{ color: '#0A69FE' }} />
+                <Input placeholder="PASSWORD" secureTextEntry />
+              </InputGroup>
+            </ListItem>
+            <Button style={{ alignSelf: 'center', marginTop: 20, marginBottom: 20 }}>
+              Sign Up
+            </Button>
+          </List>
+        </Content>
+        <PickerSelector
+          handleNewPicture={handleNewPicture}
+          closeModal={closeModal}
+          {...props}/>
+      </View>
     </Container>
   )
 }

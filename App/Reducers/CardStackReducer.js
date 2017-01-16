@@ -5,7 +5,7 @@ const initialState = {
   index: 0,
   routes: [
     {
-      key: 'productsContainer',
+      key: 'loginContainer',
       index: 0,
       passProps: {}
     },

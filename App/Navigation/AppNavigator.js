@@ -10,6 +10,7 @@ import ProductsContainer from '../Containers/ProductsContainer'
 import ProductDetailContainer from '../Containers/ProductDetailContainer'
 import UserContainer from '../Containers/UserContainer'
 import NewProductContainer from '../Containers/NewProductContainer'
+import LoginContainer from '../Containers/LoginContainer'
 
 const { popRoute, pushRoute, } = actions;
 
@@ -69,6 +70,8 @@ class AppNavigator extends Component {
 
   _renderScene = (props) => {
     switch (props.scene.route.key) {
+      case 'loginContainer':
+        return <LoginContainer />
       case 'productsContainer':
         return <ProductsContainer />;
       case 'productDetailContainer':
@@ -78,7 +81,7 @@ class AppNavigator extends Component {
       case 'newProductContainer':
         return <NewProductContainer />
       default :
-        return <ProductsContainer />;
+        return <LoginContainer />;
     }
   }
 
