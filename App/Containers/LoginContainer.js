@@ -8,6 +8,12 @@ import { authenticate } from '../Actions/LoginActions'
 
 class LoginContainer extends Component {
 
+  componentWillReceiveProps = (nextProps) => {
+    if (nextProps.auth.authenticated) {
+      this.props.navigateTo('productsContainer', 'loginContainer')
+    }
+  }
+
   login = (userEmail, passwd) => {
 
     userEmail = 'allendes91@gmail.com'
@@ -15,12 +21,6 @@ class LoginContainer extends Component {
 
     this.props.authenticate(userEmail, passwd)
 
-    console.log(this.props.auth)
-
-  }
-
-  successLogin = (result) => {
-    this.props.navigateTo('productsContainer', 'loginContainer')
   }
 
   register = () => {
@@ -30,7 +30,8 @@ class LoginContainer extends Component {
   render() {
     return <Login
               login={this.login}
-              register={this.register}/>
+              register={this.register}
+              {...this.props}/>
   }
 }
 

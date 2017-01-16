@@ -20,6 +20,9 @@ class DrawerSideBar extends Component {
           <ListItem button onPress={() => this.goTo('userRegistry')} >
             <Text>User Account</Text>
           </ListItem>
+          <ListItem button onPress={() => this.goTo('userRegistry')} >
+            <Text>Logout</Text> 
+          </ListItem>
         </List>
       </Content>
     )

@@ -1,6 +1,8 @@
 import { firebaseAuth } from '../Config/firebase'
 
 export const INIT_AUTH = 'INIT_AUTH'
+export const LOGIN_ERROR = 'LOGIN_ERROR'
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 
 export function initAuth() {
   return {
@@ -10,9 +12,10 @@ export function initAuth() {
 
 export function authenticate(email, passwd) {
     return dispatch => {
-      firebaseAuth.signInWithEmailAndPassword(email, passwd)
-        .then(result => dispatch(signInSuccess(result)))
-        .catch(err => dispatch(signInError(err)))
+      dispatch(initAuth())
+      return firebaseAuth.signInWithEmailAndPassword(email, passwd)
+          .then(result => dispatch(signInSuccess(result)))
+          .catch(err => dispatch(signInError(err)))
     }
 }
 

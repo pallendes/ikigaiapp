@@ -9,10 +9,25 @@ import { Container,
    Text,
    View,
    Button,
+   Spinner,
    Input } from 'native-base'
 import { TouchableHighlight } from 'react-native'
 
-export default Login = ({login, register}) => {
+export default Login = ({login, register, ...props}) => {
+  console.log(props)
+
+  let loginButton =(
+            <Button
+              onPress={() => login('', '')}
+              block
+              style={{ alignSelf: 'center', marginTop: 20, marginBottom: 20 }}>
+              Login
+            </Button>)
+
+  if (props.auth.isProcessing) {
+    loginButton = (<View style={{alignItems: 'center'}}><Spinner color='blue'/></View>)
+  }
+
   return (
     <Container>
       <View style={{flex:1, flexDirection: 'row', alignItems: 'center'}}>
@@ -32,13 +47,8 @@ export default Login = ({login, register}) => {
               </InputGroup>
             </ListItem>
           </List>
-          <Button
-            onPress={() => login('', '')}
-            block
-            style={{ alignSelf: 'center', marginTop: 20, marginBottom: 20 }}>
-            Login
-          </Button>
-            <Text onPress={() => register()} style={{ alignSelf: 'center'}}>New here?</Text>
+          {loginButton}
+          <Text onPress={() => register()} style={{ alignSelf: 'center'}}>New here?</Text>
         </Content>
       </View>
     </Container>
