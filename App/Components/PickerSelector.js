@@ -3,7 +3,6 @@ import Modal from 'react-native-simple-modal'
 import { TouchableHighlight, TouchableOpacity, Text } from 'react-native'
 
 export default PickerSelector = ({handleNewPicture, closeModal, ...props}) => {
-  console.log(props)
   return (
     <Modal
        open={props.modalOpen}

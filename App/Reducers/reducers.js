@@ -5,6 +5,7 @@ import { combineReducers } from 'redux'
 import cardNavigation from './CardStackReducer'
 import { cameraReducer } from './CameraReducer'
 import { authReducer } from './LoginReducer'
+import { userReducer } from './UserReducer'
 
 export default combineReducers({
         products: showProducts,
@@ -12,5 +13,6 @@ export default combineReducers({
         drawer: toggleDrawer,
         product: showProductDetail,
         camera: cameraReducer,
-        auth: authReducer
+        auth: authReducer,
+        user: userReducer
     })

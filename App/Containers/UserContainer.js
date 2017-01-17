@@ -3,19 +3,32 @@ import UserRegistry from '../Components/UserRegistry'
 import { connect } from 'react-redux'
 import navigateTo from '../Actions/SideBarNav'
 import ImagePicker from 'react-native-image-crop-picker'
+import { createUser } from '../Actions/UserActions'
 
 class UserContainer extends Component {
 
   constructor(props) {
     super(props)
+    console.log(props)
     this.state = {
       pictureUri: '',
-      modalOpen: false
+      modalOpen: false,
+      user: {
+        name: 'Pablo',
+        lastName: 'Allendes',
+        email: 'a@a.com',
+        passwd: 'pad1235!??'
+      }
     }
   }
 
   goBack = () => {
     this.props.navigateTo('productsContainer', 'productsContainer')
+  }
+
+  createUser = () => {
+    let user = this.state.user
+    this.props.createUser(user)
   }
 
   handleNewPicture = (from) => {
@@ -26,7 +39,7 @@ class UserContainer extends Component {
         height: 400
       }).then(image => {
         this.setState({pictureUri: image.path})
-      });
+      }).catch(err => console.log(err));
     } else {
       ImagePicker.openPicker({})
         .then(image => {
@@ -43,6 +56,14 @@ class UserContainer extends Component {
     this.setState({modalOpen: false})
   }
 
+  setUserProp = (value, prop) => {
+    let user = this.state.user
+    user[prop] = value
+    this.setState({
+      user: user
+    })
+  }
+
   render() {
     return (
       <UserRegistry
@@ -50,13 +71,21 @@ class UserContainer extends Component {
         handleNewPicture={this.handleNewPicture}
         openModal={this.openModal}
         closeModal={this.closeModal}
+        createUser={this.createUser}
+        setUserProp={this.setUserProp}
+        showLoader={this.props.userReducer.isProcessing}
         {...this.state}/>
     )
   }
 }
 
-mapDispatchToProps = (dispatch) => ({
-  navigateTo: (route, homeRoute) => dispatch(navigateTo(route, homeRoute))
+const mapStateToProps = (state) => ({
+  userReducer: state.user
 })
 
-export default connect(null, mapDispatchToProps)(UserContainer)
+const mapDispatchToProps = (dispatch) => ({
+  navigateTo: (route, homeRoute) => dispatch(navigateTo(route, homeRoute)),
+  createUser: (user) => dispatch(createUser(user))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserContainer)

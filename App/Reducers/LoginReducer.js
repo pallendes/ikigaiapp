@@ -1,4 +1,10 @@
-import { INIT_AUTH, LOGIN_SUCCESS, LOGIN_ERROR } from '../Actions/LoginActions'
+import { INIT_AUTH,
+  LOGIN_SUCCESS,
+  LOGIN_ERROR,
+  INIT_LOGOUT,
+  LOGOUT_ERROR,
+  LOGOUT_SUCCESS
+} from '../Actions/LoginActions'
 
 const initialState = {
   authenticated: false,
@@ -27,7 +33,25 @@ export function authReducer (state = initialState, action) {
         ...state,
         authenticated: false,
         errorMessage: action.payload,
-        isProcessing: false, 
+        isProcessing: false,
+      }
+    case INIT_LOGOUT:
+      return {
+        ...state,
+        isProcessing: true,
+      }
+    case LOGOUT_SUCCESS: {
+      return {
+        ...state,
+        isProcessing: false,
+        authenticated: false,
+      }
+    }
+    case LOGOUT_ERROR:
+      return {
+        ...state,
+        isProcessing: false,
+        errorMessage: action.payload,
       }
     default:
       return state

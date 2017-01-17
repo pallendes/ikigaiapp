@@ -14,9 +14,10 @@ import { Container,
 import { TouchableHighlight, Image } from 'react-native'
 import { View } from 'native-base'
 import PickerSelector from './PickerSelector'
+import AsyncLoader from './AsyncLoader'
 
-const UserRegistry = ({goBack, handleNewPicture, openModal, closeModal, ...props}) => {
-
+const UserRegistry = ({goBack, handleNewPicture, openModal, closeModal, createUser, setUserProp, ...props}) => {
+console.log('UserRegistry', props)
   let pictureUri = props.pictureUri === ''
     ? require('../Images/Photo-not-available.png') : {uri: props.pictureUri}
 
@@ -26,7 +27,7 @@ const UserRegistry = ({goBack, handleNewPicture, openModal, closeModal, ...props
         <Button transparent onPress={() => goBack()}>
           <Icon name='ios-arrow-back' />
         </Button>
-        <Title>Product Detail</Title>
+        <Title>Sing Up</Title>
         <Button transparent>
           <Icon name='ios-menu' />
         </Button>
@@ -45,12 +46,18 @@ const UserRegistry = ({goBack, handleNewPicture, openModal, closeModal, ...props
             </ListItem>
             <ListItem>
               <InputGroup>
-                <Input inlineLabel label="First Name" placeholder="John" />
+                <Input inlineLabel
+                  label="First Name"
+                  placeholder="John"
+                  onChangeText={text => setUserProp(text, 'name')}/>
               </InputGroup>
             </ListItem>
             <ListItem>
               <InputGroup>
-                <Input inlineLabel label="Last Name" placeholder="Doe" />
+                <Input inlineLabel
+                  label="Last Name"
+                  placeholder="Doe"
+                  onChangeText={text => setUserProp(text, 'lastName')}/>
               </InputGroup>
             </ListItem>
             <ListItem>
@@ -65,7 +72,8 @@ const UserRegistry = ({goBack, handleNewPicture, openModal, closeModal, ...props
                 <Input placeholder="PASSWORD" secureTextEntry />
               </InputGroup>
             </ListItem>
-            <Button style={{ alignSelf: 'center', marginTop: 20, marginBottom: 20 }}>
+            <Button style={{ alignSelf: 'center', marginTop: 20, marginBottom: 20 }}
+              onPress={() => createUser()}>
               Sign Up
             </Button>
           </List>
@@ -74,6 +82,7 @@ const UserRegistry = ({goBack, handleNewPicture, openModal, closeModal, ...props
           handleNewPicture={handleNewPicture}
           closeModal={closeModal}
           {...props}/>
+        <AsyncLoader modalOpen={props.showLoader} />
       </View>
     </Container>
   )
