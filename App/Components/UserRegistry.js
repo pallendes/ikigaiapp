@@ -49,7 +49,7 @@ const UserRegistry = ({goBack, handleNewPicture, openModal, closeModal, createUs
                 <Input inlineLabel
                   label="First Name"
                   placeholder="John"
-                  onChangeText={text => setUserProp(text, 'name')}/>
+                  onEndEditing={text => setUserProp(text, 'name')}/>
               </InputGroup>
             </ListItem>
             <ListItem>
@@ -57,19 +57,22 @@ const UserRegistry = ({goBack, handleNewPicture, openModal, closeModal, createUs
                 <Input inlineLabel
                   label="Last Name"
                   placeholder="Doe"
-                  onChangeText={text => setUserProp(text, 'lastName')}/>
+                  onEndEditing={text => setUserProp(text, 'lastName')}/>
               </InputGroup>
             </ListItem>
             <ListItem>
               <InputGroup>
                 <Icon name="ios-person" style={{ color: '#0A69FE' }} />
-                <Input placeholder="EMAIL" />
+                <Input placeholder="EMAIL"
+                  onEndEditing={text => setUserProp(text, 'email')}/>
               </InputGroup>
             </ListItem>
             <ListItem>
               <InputGroup>
                 <Icon name="ios-unlock" style={{ color: '#0A69FE' }} />
-                <Input placeholder="PASSWORD" secureTextEntry />
+                <Input placeholder="PASSWORD"
+                  secureTextEntry
+                  onEndEditing={text => setUserProp(text, 'passwd')}/>
               </InputGroup>
             </ListItem>
             <Button style={{ alignSelf: 'center', marginTop: 20, marginBottom: 20 }}

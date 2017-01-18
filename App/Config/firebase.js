@@ -8,6 +8,8 @@ const fireBaseConfig = {
   messagingSenderId: "713106560116"
 };
 
+export const firebaseEnabled = false;
+
 export const firebaseApp = firebase.initializeApp(fireBaseConfig);
 export const firebaseAuth = firebaseApp.auth();
 export const firebaseDb = firebaseApp.database();

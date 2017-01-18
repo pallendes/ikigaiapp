@@ -11,14 +11,7 @@ class UserContainer extends Component {
     super(props)
     this.state = {
       pictureUri: '',
-      modalOpen: false,
-      user: {
-        name: 'Pablo',
-        lastName: 'Allendes',
-        email: 'a@a.com',
-        passwd: 'pad1235!??',
-        pictureUri: null
-      }
+      modalOpen: false
     }
   }
 
@@ -46,19 +39,22 @@ class UserContainer extends Component {
         width: 300,
         height: 400
       }).then(image => {
-        let user = this.state.user
-        user.pictureUri = image.path
-        this.setState({user: user})
-        this.setState({pictureUri: image.path})
+        this.setUserProp(image.path, 'pictureUri')
+        // let user = this.state.user
+        // user.pictureUri = image.path
+        // this.setState({user: user})
+        // this.setState({pictureUri: image.path})
       }).catch(err => console.log(err));
     } else {
       ImagePicker.openPicker({})
         .then(image => {
-          let user = this.state.user
-          user.pictureUri = image.path
-          this.setState({user: user})
-          this.setState({pictureUri: image.path})
-        });
+          this.setUserProp(image.path, 'pictureUri')
+          // let user = this.state.user
+          // user.pictureUri = image.path
+          // this.setState({user: user})
+          // this.setState({pictureUri: image.path})
+        })
+        .catch(err => console.log(err);)
     }
   }
 
@@ -71,11 +67,9 @@ class UserContainer extends Component {
   }
 
   setUserProp = (value, prop) => {
-    let user = this.state.user
+    let user = this.props.userReducer.user
     user[prop] = value
-    this.setState({
-      user: user
-    })
+    this.props.modifyUserData(user)
   }
 
   render() {
@@ -88,7 +82,7 @@ class UserContainer extends Component {
         createUser={this.createUser}
         setUserProp={this.setUserProp}
         showLoader={this.props.userReducer.isProcessing}
-        {...this.state}/>
+        {...this.props.userReducer}/>
     )
   }
 }
@@ -99,7 +93,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   navigateTo: (route, homeRoute) => dispatch(navigateTo(route, homeRoute)),
-  createUser: (user) => dispatch(createUser(user))
+  createUser: (user) => dispatch(createUser(user)),
+  modifyUserData
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserContainer)

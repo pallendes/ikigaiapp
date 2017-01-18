@@ -1,4 +1,8 @@
-import { INIT_USER_CREATION, USER_CREATED, USER_CREATION_FAILED } from '../Actions/UserActions'
+import { INIT_USER_CREATION,
+  USER_CREATED,
+  USER_CREATION_FAILED,
+  MODIFY_USER_DATA,
+  PERSIST_USER } from '../Actions/UserActions'
 
 const initialState = {
   isProcessing: false,
@@ -24,6 +28,16 @@ export function userReducer (state = initialState, action) {
         ...state,
         isProcessing: false,
         error: action.error,
+      }
+    case MODIFY_USER_DATA:
+      return {
+        ...state,
+        user: action.payload
+      }
+    case PERSIST_USER:
+      return {
+        ...state,
+        user: action.payload
       }
     default:
       return state
