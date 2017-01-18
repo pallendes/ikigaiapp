@@ -2,7 +2,8 @@ import { INIT_USER_CREATION, USER_CREATED, USER_CREATION_FAILED } from '../Actio
 
 const initialState = {
   isProcessing: false,
-  error: null
+  error: null,
+  user: null
 }
 
 export function userReducer (state = initialState, action) {
@@ -16,6 +17,7 @@ export function userReducer (state = initialState, action) {
       return {
         ...state,
         isProcessing: false,
+        user: action.payload,
       }
     case USER_CREATION_FAILED:
       return {

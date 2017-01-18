@@ -1,4 +1,4 @@
-import { firebaseAuth, firebaseDb } from '../Config/firebase'
+import { firebaseAuth, firebaseDb, firebaseStorage } from '../Config/firebase'
 
 export const INIT_USER_CREATION = 'INIT_USER_CREATION'
 export const USER_CREATED = 'USER_CREATED'
@@ -10,10 +10,10 @@ export function initRegistration() {
   }
 }
 
-export function userCreated(result) {
+export function userCreated(user) {
   return {
     type: USER_CREATED,
-    payload: result
+    payload: user
   }
 }
 
@@ -24,29 +24,38 @@ export function userCreationFailed(err) {
   }
 }
 
-// export function createUser (user) {
-//   return dispatch => {
-//     dispatch(initRegistration())
-//     return firebaseAuth.createUserWithEmailAndPassword(user.email, user.passwd)
-//       .then(user => {
-//         let userId = firebaseDb.ref().child('users').push().key
-//         let userUpdate = {}
-//         userUpdate['/users/' + userId] = user
-//         return firebaseDb.ref().update(userUpdate)
-//       })
-//       .then(result => dispatch(userCreated()))
-//       .catch(error => dispatch(userCreationFailed(error)))
-//   }
-// }
-
 export function createUser (user) {
   return dispatch => {
     dispatch(initRegistration())
-    let userId = firebaseDb.ref().child('users').push().key
-    let userUpdate = {}
-    userUpdate['/users/' + userId] = user
-    return firebaseDb.ref().update(userUpdate)
-      .then(() => dispatch(userCreated(result)))
-      .catch(error => dispatch(userCreationFailed(error)))
+    dispatch(userCreated(user)) // local
+    return user; // local
+    // return firebaseAuth.createUserWithEmailAndPassword(user.email, user.passwd)
+    //   .then(() => {
+    //     let userRef = firebaseDb.ref().child('users/' + firebaseAuth.currentUser.uid)
+    //     return userRef.set({
+    //       name: user.name,
+    //       lastName: user.lastName,
+    //       email: user.email
+    //     })
+    //   })
+      // .then(() => {
+      //   let storageRef = firebaseStorage.ref().child('users/' + firebaseAuth.currentUser.uid)
+      //
+      // })
+      // .then(result => dispatch(userCreated(user)))
+      // .catch(error => dispatch(userCreationFailed(error)))
+  }
+}
+
+export function updateUser (user) {
+  return dispatch => {
+    dispatch(initRegistration())
+    let userRef = firebaseDb.ref().child('users/' + firebaseAuth.currentUser.uid)
+    return userRef.set({
+      name: user.name,
+      lastName: user.lastName
+    })
+    .then(() => dispatch(userCreated(result)))
+    .catch(error => dispatch(userCreationFailed(error)))
   }
 }

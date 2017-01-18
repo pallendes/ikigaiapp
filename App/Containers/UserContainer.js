@@ -9,7 +9,6 @@ class UserContainer extends Component {
 
   constructor(props) {
     super(props)
-    console.log(props)
     this.state = {
       pictureUri: '',
       modalOpen: false,
@@ -17,8 +16,17 @@ class UserContainer extends Component {
         name: 'Pablo',
         lastName: 'Allendes',
         email: 'a@a.com',
-        passwd: 'pad1235!??'
+        passwd: 'pad1235!??',
+        pictureUri: null
       }
+    }
+  }
+
+  componentWillMount = () => {
+    if (this.props.userReducer.user) {
+      this.setState({
+        user: this.props.userReducer.user
+      })
     }
   }
 
@@ -38,11 +46,17 @@ class UserContainer extends Component {
         width: 300,
         height: 400
       }).then(image => {
+        let user = this.state.user
+        user.pictureUri = image.path
+        this.setState({user: user})
         this.setState({pictureUri: image.path})
       }).catch(err => console.log(err));
     } else {
       ImagePicker.openPicker({})
         .then(image => {
+          let user = this.state.user
+          user.pictureUri = image.path
+          this.setState({user: user})
           this.setState({pictureUri: image.path})
         });
     }

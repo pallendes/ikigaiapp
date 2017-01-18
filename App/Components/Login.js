@@ -14,7 +14,6 @@ import { Container,
 import { TouchableHighlight } from 'react-native'
 
 export default Login = ({login, register, ...props}) => {
-  console.log(props)
 
   let loginButton =(
             <Button

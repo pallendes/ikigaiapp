@@ -17,7 +17,7 @@ import PickerSelector from './PickerSelector'
 import AsyncLoader from './AsyncLoader'
 
 const UserRegistry = ({goBack, handleNewPicture, openModal, closeModal, createUser, setUserProp, ...props}) => {
-console.log('UserRegistry', props)
+
   let pictureUri = props.pictureUri === ''
     ? require('../Images/Photo-not-available.png') : {uri: props.pictureUri}
 

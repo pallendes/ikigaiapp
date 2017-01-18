@@ -24,10 +24,12 @@ export function authenticate(email, passwd) {
       dispatch(initAuth())
       return firebaseAuth.signInWithEmailAndPassword(email, passwd)
         .then(result => {
-          let userId =
           dispatch(signInSuccess(result))
         })
-        .catch(err => dispatch(signInError(err)))
+        .catch(err => {
+          console.log('authenticate error: ', err)
+          dispatch(signInError(err))
+        })
     }
 }
 

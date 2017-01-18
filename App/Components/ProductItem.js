@@ -14,16 +14,4 @@ class Product extends React.Component {
   }
 }
 
-// const Product = ({ showProductDetail, product }) => (
-//     <ListItem onPress={ () => showProductDetail(product.id) }>
-//       <Thumbnail square size={80} source={require('../Images/Photo-not-available.png')}/>
-//       <Text>{product.name}</Text>
-//       <Text note>{product.description}</Text>
-//     </ListItem>
-// );
-
-// Product.propTypes = {
-//     product: PropTypes.object.isRequired
-// };
-
 export default Product;
