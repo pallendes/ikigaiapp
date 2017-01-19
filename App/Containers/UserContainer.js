@@ -3,7 +3,7 @@ import UserRegistry from '../Components/UserRegistry'
 import { connect } from 'react-redux'
 import navigateTo from '../Actions/SideBarNav'
 import ImagePicker from 'react-native-image-crop-picker'
-import { createUser } from '../Actions/UserActions'
+import { createUser, modifyUserData } from '../Actions/UserActions'
 
 class UserContainer extends Component {
 
@@ -16,11 +16,11 @@ class UserContainer extends Component {
   }
 
   componentWillMount = () => {
-    if (this.props.userReducer.user) {
-      this.setState({
-        user: this.props.userReducer.user
-      })
-    }
+    // if (this.props.userReducer.user) {
+    //   this.setState({
+    //     user: this.props.userReducer.user
+    //   })
+    // }
   }
 
   goBack = () => {
@@ -40,21 +40,13 @@ class UserContainer extends Component {
         height: 400
       }).then(image => {
         this.setUserProp(image.path, 'pictureUri')
-        // let user = this.state.user
-        // user.pictureUri = image.path
-        // this.setState({user: user})
-        // this.setState({pictureUri: image.path})
       }).catch(err => console.log(err));
     } else {
       ImagePicker.openPicker({})
         .then(image => {
           this.setUserProp(image.path, 'pictureUri')
-          // let user = this.state.user
-          // user.pictureUri = image.path
-          // this.setState({user: user})
-          // this.setState({pictureUri: image.path})
         })
-        .catch(err => console.log(err);)
+        .catch(err => console.log(err))
     }
   }
 
@@ -68,7 +60,7 @@ class UserContainer extends Component {
 
   setUserProp = (value, prop) => {
     let user = this.props.userReducer.user
-    user[prop] = value
+    user[prop] = value.text
     this.props.modifyUserData(user)
   }
 
@@ -94,7 +86,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   navigateTo: (route, homeRoute) => dispatch(navigateTo(route, homeRoute)),
   createUser: (user) => dispatch(createUser(user)),
-  modifyUserData
+  modifyUserData: (user) => dispatch(modifyUserData(user))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserContainer)

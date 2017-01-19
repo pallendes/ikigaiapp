@@ -5,6 +5,10 @@ import Product from './ProductItem'
 
 class ProductList extends Component {
 
+  constructor(props){
+    super(props)
+  }
+
   goToDetail = (productId) => {
     this.props.goToDetail(productId)
   }

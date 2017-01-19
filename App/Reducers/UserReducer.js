@@ -2,15 +2,24 @@ import { INIT_USER_CREATION,
   USER_CREATED,
   USER_CREATION_FAILED,
   MODIFY_USER_DATA,
-  PERSIST_USER } from '../Actions/UserActions'
+  PERSIST_USER,
+  DELETE_USER } from '../Actions/UserActions'
+
+const userModel = {
+  name: '',
+  lastName: '',
+  email: '',
+  pictureUri: ''
+}
 
 const initialState = {
   isProcessing: false,
   error: null,
-  user: null
+  user: userModel
 }
 
 export function userReducer (state = initialState, action) {
+
   switch (action.type) {
     case INIT_USER_CREATION:
       return {
@@ -29,10 +38,15 @@ export function userReducer (state = initialState, action) {
         isProcessing: false,
         error: action.error,
       }
+    case DELETE_USER:
+      return {
+        ...state,
+        user: userModel
+      }
     case MODIFY_USER_DATA:
       return {
         ...state,
-        user: action.payload
+        user: action.payload,
       }
     case PERSIST_USER:
       return {

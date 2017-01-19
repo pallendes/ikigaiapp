@@ -18,8 +18,8 @@ import AsyncLoader from './AsyncLoader'
 
 const UserRegistry = ({goBack, handleNewPicture, openModal, closeModal, createUser, setUserProp, ...props}) => {
 
-  let pictureUri = props.pictureUri === ''
-    ? require('../Images/Photo-not-available.png') : {uri: props.pictureUri}
+  let pictureUri = props.user.pictureUri === ''
+    ? require('../Images/Photo-not-available.png') : {uri: props.user.pictureUri}
 
   return (
     <Container>
@@ -49,7 +49,8 @@ const UserRegistry = ({goBack, handleNewPicture, openModal, closeModal, createUs
                 <Input inlineLabel
                   label="First Name"
                   placeholder="John"
-                  onEndEditing={text => setUserProp(text, 'name')}/>
+                  value={props.user.name}
+                  onChangeText={text => setUserProp({text}, 'name')}/>
               </InputGroup>
             </ListItem>
             <ListItem>
@@ -57,14 +58,16 @@ const UserRegistry = ({goBack, handleNewPicture, openModal, closeModal, createUs
                 <Input inlineLabel
                   label="Last Name"
                   placeholder="Doe"
-                  onEndEditing={text => setUserProp(text, 'lastName')}/>
+                  value={props.user.lastName}
+                  onChangeText={text => setUserProp({text}, 'lastName')}/>
               </InputGroup>
             </ListItem>
             <ListItem>
               <InputGroup>
                 <Icon name="ios-person" style={{ color: '#0A69FE' }} />
                 <Input placeholder="EMAIL"
-                  onEndEditing={text => setUserProp(text, 'email')}/>
+                  value={props.user.email}
+                  onChangeText={text => setUserProp({text}, 'email')}/>
               </InputGroup>
             </ListItem>
             <ListItem>
@@ -72,7 +75,8 @@ const UserRegistry = ({goBack, handleNewPicture, openModal, closeModal, createUs
                 <Icon name="ios-unlock" style={{ color: '#0A69FE' }} />
                 <Input placeholder="PASSWORD"
                   secureTextEntry
-                  onEndEditing={text => setUserProp(text, 'passwd')}/>
+                  value={props.user.passwd}
+                  onChangeText={text => setUserProp({text}, 'passwd')}/> 
               </InputGroup>
             </ListItem>
             <Button style={{ alignSelf: 'center', marginTop: 20, marginBottom: 20 }}

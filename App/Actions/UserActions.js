@@ -5,6 +5,7 @@ export const USER_CREATED = 'USER_CREATED'
 export const USER_CREATION_FAILED = 'USER_CREATION_FAILED'
 export const MODIFY_USER_DATA = 'MODIFY_USER_DATA'
 export const PERSIST_USER = 'PERSIST_USER'
+export const DELETE_USER = 'DELETE_USER'
 
 export function initRegistration() {
   return {
@@ -37,10 +38,19 @@ export function createUser (user) {
   }
 }
 
+//@TODO add firebase support
+export function deleteUser(user) {
+  if(firebaseEnabled) {
+    return {
+      type: DELETE_USER
+    }
+  }
+}
+
 export function persistUser(user) {
   if (firebaseEnabled) {
     return {
-      action: persistUser,
+      type: persistUser,
       payload: user
     }
   } else {
@@ -50,7 +60,7 @@ export function persistUser(user) {
 
 export function modifyUserData(user) {
   return {
-    action: MODIFY_USER_DATA,
+    type: MODIFY_USER_DATA,
     payload: user
   }
 }

@@ -2,13 +2,11 @@ import React from 'react'
 import Modal from 'react-native-simple-modal'
 import { TouchableHighlight, TouchableOpacity, Text } from 'react-native'
 
-export default PickerSelector = ({handleNewPicture, closeModal, ...props}) => {
+export default PickerSelector = ({handleNewPicture, closeModal, modalOpen}) => {
   return (
     <Modal
-       open={props.modalOpen}
+       open={modalOpen}
        offset={-100}
-       modalDidOpen={() => console.log('modal did open')}
-       modalDidClose={() => console.log('modal did open')}
        style={{alignItems: 'center'}}>
        <Text style={{fontSize: 20, marginBottom: 10, textAlign: 'center'}}>Add picture</Text>
        <TouchableOpacity onPress={() => handleNewPicture('camera')}>

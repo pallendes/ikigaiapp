@@ -6,6 +6,8 @@ import cardNavigation from './CardStackReducer'
 import { cameraReducer } from './CameraReducer'
 import { authReducer } from './LoginReducer'
 import { userReducer } from './UserReducer'
+import { categoryReducer } from './CategoryReducer'
+import { factoryReducer } from './FactoryReducer'
 
 export default combineReducers({
         products: showProducts,
@@ -14,5 +16,7 @@ export default combineReducers({
         product: showProductDetail,
         camera: cameraReducer,
         auth: authReducer,
-        user: userReducer
+        user: userReducer,
+        categories: categoryReducer,
+        factories: factoryReducer
     })

@@ -14,7 +14,9 @@ if (process.env.NODE_ENV !== 'production') {
   middlewares.push(logger)
 }
 
-const store = createStore(reducers, applyMiddleware(...middlewares), autoRehydrate());
-persistStore(store, { storage: AsyncStorage, blacklist: ['navigation'] })
+const store = createStore(reducers, applyMiddleware(...middlewares));
+
+// const store = createStore(reducers, applyMiddleware(...middlewares), autoRehydrate());
+// persistStore(store, { storage: AsyncStorage, blacklist: ['navigation'] })
 
 export default store;

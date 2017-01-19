@@ -1,4 +1,4 @@
-import { SHOW_PRODUCTS } from '../Actions/ProductActions'
+import { SHOW_PRODUCTS, PERSIST_PRODUCT } from '../Actions/ProductActions'
 
 const initialState = {
   productList: []
@@ -9,10 +9,14 @@ export const showProducts = (state = initialState, action) => {
     case SHOW_PRODUCTS:
       return {
         ...state,
-        productList : action.payload,
+        productList: action.payload,
       }
-      break;
+    case PERSIST_PRODUCT:
+      return {
+        ...state,
+        productList: action.payload,
+      }
     default:
-      return state;
+      return state
   }
 }

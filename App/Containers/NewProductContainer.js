@@ -6,14 +6,24 @@ import { launchCamera, pictureTaken, closeCamera } from '../Actions/CameraAction
 import _Camera from '../Components/_Camera'
 import ImagePicker from 'react-native-image-crop-picker'
 import { List, ListItem, Text } from 'native-base'
+import { getCategories } from '../Actions/CategoryActions'
+import ProductModel from '../Models/ProductModel'
+import { getFactories } from '../Actions/FactoryActions'
+import { persistProduct } from '../Actions/ProductActions'
 
 class NewProductContainer extends Component {
 
   constructor(props) {
     super(props)
     this.state = {
-      modalOpen: false
+      modalOpen: false,
+      product: ProductModel
     }
+  }
+
+  componentWillMount = () => {
+    this.props.getCategories()
+    this.props.getFactories()
   }
 
   setNativeProps(nativeProps) {
@@ -51,6 +61,19 @@ class NewProductContainer extends Component {
     }
   }
 
+  setProductProps = (value, prop) => {
+    let product = this.state.product
+    product[prop] = value.text
+    this.setState({
+      product: product
+    })
+  }
+
+  saveProduct = () => {
+    let product = this.state.product
+    this.props.persistProduct(product, this.props.products)
+  }
+
   openModal = () => {
     this.setState({
       modalOpen: true
@@ -71,7 +94,10 @@ class NewProductContainer extends Component {
         pictureUri={this.props.pictureUri}
         openModal={this.openModal}
         closeModal={this.closeModal}
-        {...this.state} />
+        modalOpen={this.state.modalOpen}
+        saveProduct={this.saveProduct.bind(this)}
+        setProductProps={this.setProductProps}
+        {...this.props} />
     )
   }
 
@@ -79,14 +105,20 @@ class NewProductContainer extends Component {
 
 mapStateToProps = state => ({
   cameraState: state.camera.cameraState,
-  pictureUri: state.camera.pictureUri
+  pictureUri: state.camera.pictureUri,
+  categories: state.categories.categories,
+  factories: state.factories.factories,
+  products: state.products.productList,
 })
 
 mapDispatchToProps = (dispatch) => ({
   navigateTo: (route, homeRoute) => dispatch(navigateTo(route, homeRoute)),
   launchCamera: () => dispatch(launchCamera()),
   pictureTaken: (pictureUri) => dispatch(pictureTaken(pictureUri)),
-  closeCamera: () => dispatch(closeCamera())
+  closeCamera: () => dispatch(closeCamera()),
+  getCategories: () => dispatch(getCategories()),
+  getFactories: () => dispatch(getFactories()),
+  persistProduct: (product) => dispatch(persistProduct(product))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewProductContainer)
