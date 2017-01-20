@@ -6,11 +6,6 @@ import navigateTo from '../Actions/SideBarNav'
 
 class ProductDetailContainer extends Component {
 
-  // constructor(props) {
-  //   super(props)
-  //   console.log('ProductDetailContainer ', props)
-  // }
-
   goBack = () => {
     this.props.navigateTo('productsContainer', 'productsContainer')
   }

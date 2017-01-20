@@ -1,34 +1,29 @@
-import React, { PropTypes, Component } from 'react'
+import React, { Component } from 'react'
 import { List } from 'native-base'
-import Product from './ProductItem'
-// import { Actions } from 'react-native-router-flux'
+import ProductItem from './ProductItem'
+import { StyleSheet } from 'react-native'
 
-class ProductList extends Component {
-
-  constructor(props){
-    super(props)
+//@TODO mover a un archivo comun
+const style = StyleSheet.create({
+  list: {
+    marginRight: 15
   }
+})
 
-  goToDetail = (productId) => {
-    this.props.goToDetail(productId)
-  }
-
-  render() {
-    return (
-      <List>
-        {
-          this.props.products.map((product) =>
-            <Product
-              key={product.id}
-              product={product}
-              goToDetail={this.goToDetail.bind(this)}
-              />
-          )
-        }
-      </List>
-    )
-  }
-
+const ProductList = (props) => {
+  return (
+    <List style={style.list}>
+      {
+        props.products.map((product) =>
+          <ProductItem
+            key={product.id}
+            product={product}
+            goToDetail={props.goToDetail}
+            />
+        )
+      }
+    </List>
+  )
 }
 
-export default ProductList;
+export default ProductList

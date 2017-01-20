@@ -1,17 +1,14 @@
 import React, { Proptypes } from 'react'
 import { ListItem, Thumbnail, Text } from 'native-base'
 
-class Product extends React.Component {
-
-  render() {
-    return (
-      <ListItem onPress={() => this.props.goToDetail({selectedProduct: this.props.product})}>
-        <Thumbnail square size={80} source={require('../Images/Photo-not-available.png')}/>
-        <Text>{this.props.product.name}</Text>
-        <Text note>{this.props.product.description}</Text>
-      </ListItem>
-    )
-  }
+const ProductItem = (props) => {
+  return (
+    <ListItem onPress={() => props.goToDetail({selectedProduct: props.product})}>
+      <Thumbnail square size={80} source={require('../Images/Photo-not-available.png')}/>
+      <Text>{props.product.name}</Text>
+      <Text note>{props.product.description}</Text>
+    </ListItem>
+  )
 }
 
-export default Product;
+export default ProductItem;

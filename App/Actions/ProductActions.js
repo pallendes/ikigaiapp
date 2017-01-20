@@ -12,9 +12,9 @@ export function showProducts() {
 }
 
 //@TODO add firebase support
-export function persistProduct(product, productList) {
+export function persistProduct(productList) {
   return {
     type: PERSIST_PRODUCT,
-    payload: productList.push(product)
+    payload: productList
   }
 }

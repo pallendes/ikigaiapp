@@ -10,6 +10,7 @@ import { getCategories } from '../Actions/CategoryActions'
 import ProductModel from '../Models/ProductModel'
 import { getFactories } from '../Actions/FactoryActions'
 import { persistProduct } from '../Actions/ProductActions'
+import { ToastAndroid } from 'react-native'
 
 class NewProductContainer extends Component {
 
@@ -26,7 +27,7 @@ class NewProductContainer extends Component {
     this.props.getFactories()
   }
 
-  setNativeProps(nativeProps) {
+  setNativeProps = (nativeProps) => {
     this._root.setNativeProps(nativeProps);
   }
 
@@ -34,12 +35,17 @@ class NewProductContainer extends Component {
     this.props.navigateTo('productsContainer', 'productsContainer')
   }
 
+  //@TODO remover?
   takePicture = (camRef) => {
     camRef.capture()
       .then((data) => {
-        console.log(data)
         this.props.closeCamera()
-        this.props.pictureTaken(data.path)
+        let product = this.state.product
+        product.pictures.push(data.path)
+        this.setState({
+          product: product
+        })
+        // this.props.pictureTaken(data.path)
       })
       .catch(err => console.log(err))
   }
@@ -51,12 +57,22 @@ class NewProductContainer extends Component {
         width: 300,
         height: 400
       }).then(image => {
-        this.props.pictureTaken(image.path)
+        let product = this.state.product
+        product.pictures.push(image.path)
+        this.setState({
+          product: product
+        })
+        // this.props.pictureTaken(image.path)
       });
     } else {
       ImagePicker.openPicker({})
         .then(image => {
-          this.props.pictureTaken(image.path)
+          let product = this.state.product
+          product.pictures.push(image.path)
+          this.setState({
+            product: product
+          })
+          // this.props.pictureTaken(image.path)
         });
     }
   }
@@ -70,8 +86,18 @@ class NewProductContainer extends Component {
   }
 
   saveProduct = () => {
+
+    let prevLength = this.props.products.length
     let product = this.state.product
-    this.props.persistProduct(product, this.props.products)
+    let products = this.props.products
+    products.push(product)
+    this.props.persistProduct(products)
+    //@TODO mejorar esto
+    if(this.props.products.length > prevLength) {
+      this.props.navigateTo('productsContainer', 'productsContainer')
+      ToastAndroid.show('Your peoduct was created succesfully!', ToastAndroid.SHORT)
+    }
+
   }
 
   openModal = () => {
@@ -97,10 +123,10 @@ class NewProductContainer extends Component {
         modalOpen={this.state.modalOpen}
         saveProduct={this.saveProduct.bind(this)}
         setProductProps={this.setProductProps}
+        product={this.state.product}
         {...this.props} />
     )
   }
-
 }
 
 mapStateToProps = state => ({

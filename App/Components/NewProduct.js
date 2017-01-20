@@ -12,10 +12,22 @@ import { Container,
   Header,
   Picker,
   Item,
+  Fab,
   View,
   Title } from 'native-base'
 import { TouchableHighlight, TouchableOpacity, Image } from 'react-native'
+import ImgSwiper from './ImgSwiper'
 import PickerSelector from './PickerSelector'
+import { StyleSheet } from 'react-native'
+
+const style = StyleSheet.create({
+  content: {
+    margin: 0
+  },
+  list: {
+    marginRight: 15
+  }
+})
 
 const NewProduct
   = ({goBack, handleNewPicture, pictureUri, openModal, closeModal, modalOpen, setProductProps, saveProduct, ...props}) => {
@@ -29,23 +41,21 @@ const NewProduct
         <Button transparent onPress={() => goBack()}>
           <Icon name='ios-arrow-back' />
         </Button>
-        <Title>Product Detail</Title>
+        <Title>Add Product</Title>
         <Button transparent onPress={() => handleNewPicture()}>
           <Icon name='ios-menu' />
         </Button>
       </Header>
       <View>
-        <Content>
-          <List>
-            <ListItem>
-              <View style={{justifyContent: 'center', alignItems: 'center'}}>
-                <TouchableHighlight onPress={() => openModal()}>
-                  <Image
-                    style={{width: 120, height: 120}}
-                    source={picture}/>
-                </TouchableHighlight>
-              </View>
-            </ListItem>
+        <Content style={style.content}>
+          <View style={{justifyContent: 'center', alignItems: 'center'}}>
+            <ImgSwiper {...props.product}/>
+            <Button style={{position: 'absolute', right: 10, bottom: 10, borderRadius: 50, width: 35, height: 35}}
+              onPress={() => openModal()}>
+                <Icon name='ios-add'/>
+            </Button>
+          </View>
+          <List style={style.list}>
             <ListItem>
               <InputGroup>
                 <Input inlineLabel
