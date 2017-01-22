@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react'
 import ImgSwiper from './ImgSwiper'
+import { StyleSheet, Dimensions } from 'react-native'
 import { Grid,
   Text,
   Row,
@@ -17,6 +18,17 @@ import { Grid,
   Header,
   Title } from 'native-base'
 
+var width = Dimensions.get('window').width
+
+const style = StyleSheet.create({
+  list: {
+    marginRight: 15
+  },
+  text: {
+    width: width / 3
+  }
+})
+
 const ProductDetail = (props) => {
   return (
     <View>
@@ -32,37 +44,37 @@ const ProductDetail = (props) => {
         </Header>
         <Content>
           <ImgSwiper {...props.product} />
-          <List>
+          <List style={style.list}>
             <ListItem>
-              <Text>Name</Text>
+              <Text style={style.width}>Name</Text>
               <Text note>{props.product.name}</Text>
             </ListItem>
             <ListItem>
-              <Text>Price (RMB)</Text>
+              <Text style={style.width}>Price (RMB)</Text>
               <Text note>{props.product.RMB}</Text>
             </ListItem>
             <ListItem>
-              <Text>CMB</Text>
+              <Text style={style.width}>CMB</Text>
               <Text note>{props.product.RMB}</Text>
             </ListItem>
             <ListItem>
-              <Text>UXB</Text>
+              <Text style={style.width}>UXB</Text>
               <Text note>{props.product.UXB}</Text>
             </ListItem>
             <ListItem>
-              <Text>MOQ</Text>
+              <Text style={style.width}>MOQ</Text>
               <Text note>{props.product.MOQ}</Text>
             </ListItem>
             <ListItem>
-              <Text>Factory</Text>
+              <Text style={style.width}>Factory</Text>
               <Text note>{props.product.factory.name}</Text>
             </ListItem>
             <ListItem>
-              <Text>Category</Text>
+              <Text style={style.width}>Category</Text>
               <Text note>{props.product.category.name}</Text>
             </ListItem>
             <ListItem>
-              <Text>Description</Text>
+              <Text style={style.width}>Description</Text>
               <Text note>{props.product.description}</Text>
             </ListItem>
           </List>
@@ -71,8 +83,18 @@ const ProductDetail = (props) => {
       <Fab
         containerStyle={{ marginLeft: 10 }}
         style={{ backgroundColor: '#5067FF' }}
+        direction="up"
+        active={props.fabActive}
+        onPress={() => props.showFab()}
         >
-        <Icon name="md-create" />
+        <Icon name="ios-create-outline" />
+        <Button style={{backgroundColor: 'red'}}
+          onPress={() => props.confirmDeleteProduct(props.product)}>
+          <Icon name="ios-close" />
+        </Button>
+        <Button style={style.editFab}>
+         <Icon name="md-create" />
+        </Button>
       </Fab>
     </View>
   )

@@ -6,7 +6,11 @@ const ProductItem = (props) => {
     <ListItem onPress={() => props.goToDetail({selectedProduct: props.product})}>
       <Thumbnail square size={80} source={require('../Images/Photo-not-available.png')}/>
       <Text>{props.product.name}</Text>
-      <Text note>{props.product.description}</Text>
+      <Text note>
+        {props.product.description.substring(0, 100)}
+        {props.product.description.length > 0 ? '...' : 'Description not available.'}
+      </Text>
+      <Text note>Price: {props.product.price}</Text>
     </ListItem>
   )
 }

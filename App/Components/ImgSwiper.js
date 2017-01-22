@@ -1,7 +1,7 @@
 import Swiper from 'react-native-swiper'
 import React from 'react'
 import { StyleSheet, Image } from 'react-native'
-import { Thumbnail, Text, View } from 'native-base'
+import { Thumbnail, Text, View, Icon } from 'native-base'
 
 const styles = StyleSheet.create({
   swiper: {
@@ -11,7 +11,16 @@ const styles = StyleSheet.create({
   thumbnail: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: '#9DD6EB',
+  },
+  text: {
+    fontWeight: 'bold',
+    color: '#FFF',
+  },
+  cameraIcon: {
+    color: '#FFF',
+    fontSize: 60
   }
 })
 
@@ -19,6 +28,8 @@ const ImgSwiper = (props) => {
 
   let swiperImages = null
   let key = 0
+  let defaultText = props.defaultText ?
+    props.defaultText : 'No images availables'
 
   if(props.pictures && props.pictures.length > 0) {
     swiperImages =
@@ -32,16 +43,15 @@ const ImgSwiper = (props) => {
       )
   } else {
     swiperImages =
-        <Image
-          resizeMode={Image.resizeMode.stretch}
-          style={styles.thumbnail}
-          source={require('../Images/Photo-not-available.png')} />
+      <View style={styles.thumbnail}>
+        <Icon name='ios-camera-outline' style={styles.cameraIcon}/>
+        <Text style={styles.text}>{defaultText}</Text>
+      </View>
   }
 
   return (
     <Swiper
       height={180}
-      showsButtons={true}
       style={styles.swiper}>
       {swiperImages}
     </Swiper>

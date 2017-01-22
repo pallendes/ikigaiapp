@@ -3,7 +3,6 @@ import NewProduct from '../Components/NewProduct'
 import { connect } from 'react-redux'
 import navigateTo from '../Actions/SideBarNav'
 import { launchCamera, pictureTaken, closeCamera } from '../Actions/CameraActions'
-import _Camera from '../Components/_Camera'
 import ImagePicker from 'react-native-image-crop-picker'
 import { List, ListItem, Text } from 'native-base'
 import { getCategories } from '../Actions/CategoryActions'
@@ -35,21 +34,6 @@ class NewProductContainer extends Component {
     this.props.navigateTo('productsContainer', 'productsContainer')
   }
 
-  //@TODO remover?
-  takePicture = (camRef) => {
-    camRef.capture()
-      .then((data) => {
-        this.props.closeCamera()
-        let product = this.state.product
-        product.pictures.push(data.path)
-        this.setState({
-          product: product
-        })
-        // this.props.pictureTaken(data.path)
-      })
-      .catch(err => console.log(err))
-  }
-
   handleNewPicture = (from) => {
     this.closeModal()
     if (from === 'camera') {
@@ -62,7 +46,6 @@ class NewProductContainer extends Component {
         this.setState({
           product: product
         })
-        // this.props.pictureTaken(image.path)
       });
     } else {
       ImagePicker.openPicker({})
@@ -72,7 +55,6 @@ class NewProductContainer extends Component {
           this.setState({
             product: product
           })
-          // this.props.pictureTaken(image.path)
         });
     }
   }
@@ -89,6 +71,7 @@ class NewProductContainer extends Component {
 
     let prevLength = this.props.products.length
     let product = this.state.product
+    product.id = prevLength > 0 ? this.props.products[this.props.products.length - 1].id + 1 : 0
     let products = this.props.products
     products.push(product)
     this.props.persistProduct(products)
@@ -112,6 +95,10 @@ class NewProductContainer extends Component {
     })
   }
 
+  openDrawer = () => {
+    this.props.openDrawer()
+  }
+
   render() {
     return (
       <NewProduct
@@ -124,6 +111,7 @@ class NewProductContainer extends Component {
         saveProduct={this.saveProduct.bind(this)}
         setProductProps={this.setProductProps}
         product={this.state.product}
+        openDrawer={this.openDrawer}
         {...this.props} />
     )
   }
@@ -144,7 +132,8 @@ mapDispatchToProps = (dispatch) => ({
   closeCamera: () => dispatch(closeCamera()),
   getCategories: () => dispatch(getCategories()),
   getFactories: () => dispatch(getFactories()),
-  persistProduct: (product) => dispatch(persistProduct(product))
+  persistProduct: (product) => dispatch(persistProduct(product)),
+  openDrawer: () => dispatch(openDrawer())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewProductContainer)

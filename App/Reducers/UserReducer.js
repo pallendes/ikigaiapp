@@ -5,17 +5,10 @@ import { INIT_USER_CREATION,
   PERSIST_USER,
   DELETE_USER } from '../Actions/UserActions'
 
-const userModel = {
-  name: '',
-  lastName: '',
-  email: '',
-  pictureUri: ''
-}
-
 const initialState = {
   isProcessing: false,
   error: null,
-  user: userModel
+  user: null
 }
 
 export function userReducer (state = initialState, action) {

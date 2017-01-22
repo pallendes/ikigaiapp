@@ -65,7 +65,7 @@ const UserRegistry = ({goBack, handleNewPicture, openModal, closeModal, createUs
             <ListItem>
               <InputGroup>
                 <Icon name="ios-person" style={{ color: '#0A69FE' }} />
-                <Input placeholder="EMAIL"
+                <Input placeholder="Email"
                   value={props.user.email}
                   onChangeText={text => setUserProp({text}, 'email')}/>
               </InputGroup>
@@ -73,10 +73,10 @@ const UserRegistry = ({goBack, handleNewPicture, openModal, closeModal, createUs
             <ListItem>
               <InputGroup>
                 <Icon name="ios-unlock" style={{ color: '#0A69FE' }} />
-                <Input placeholder="PASSWORD"
+                <Input placeholder="Password"
                   secureTextEntry
                   value={props.user.passwd}
-                  onChangeText={text => setUserProp({text}, 'passwd')}/> 
+                  onChangeText={text => setUserProp({text}, 'passwd')}/>
               </InputGroup>
             </ListItem>
             <Button style={{ alignSelf: 'center', marginTop: 20, marginBottom: 20 }}

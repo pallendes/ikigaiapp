@@ -6,7 +6,6 @@ import { AppRegistry } from 'react-native'
 import store from './Config/Store'
 import { Provider } from 'react-redux'
 import ProductsContainer from './Containers/ProductsContainer'
-// import NavigationRouter from './Navigation/NavigationRouter'
 import AppNavigator from './Navigation/AppNavigator'
 
 class App extends Component {

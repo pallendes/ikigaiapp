@@ -11,6 +11,7 @@ import ProductDetailContainer from '../Containers/ProductDetailContainer'
 import UserContainer from '../Containers/UserContainer'
 import NewProductContainer from '../Containers/NewProductContainer'
 import LoginContainer from '../Containers/LoginContainer'
+import UserDetailContainer from '../Containers/UserDetailContainer'
 
 const { popRoute, pushRoute, } = actions;
 
@@ -78,6 +79,8 @@ class AppNavigator extends Component {
         return <ProductDetailContainer {...props.scene.route.passProps}/>;
       case 'userRegistry':
         return <UserContainer />
+      case 'userDetailContainer':
+        return <UserDetailContainer />
       case 'newProductContainer':
         return <NewProductContainer />
       default :

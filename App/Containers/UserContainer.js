@@ -4,23 +4,24 @@ import { connect } from 'react-redux'
 import navigateTo from '../Actions/SideBarNav'
 import ImagePicker from 'react-native-image-crop-picker'
 import { createUser, modifyUserData } from '../Actions/UserActions'
+import UserModel from '../Models/UserModel'
+import { ToastAndroid } from 'react-native'
 
 class UserContainer extends Component {
 
   constructor(props) {
     super(props)
     this.state = {
-      pictureUri: '',
-      modalOpen: false
+      modalOpen: false,
+      user: UserModel
     }
   }
 
-  componentWillMount = () => {
-    // if (this.props.userReducer.user) {
-    //   this.setState({
-    //     user: this.props.userReducer.user
-    //   })
-    // }
+  componentWillReceiveProps = (newProps) => {
+    if(newProps.userReducer.user) {
+      ToastAndroid.show('User registered successfully!', ToastAndroid.SHORT)
+      this.props.navigateTo('productsContainer', 'userContainer')
+    }
   }
 
   goBack = () => {
@@ -59,9 +60,11 @@ class UserContainer extends Component {
   }
 
   setUserProp = (value, prop) => {
-    let user = this.props.userReducer.user
+    let user = this.state.user
     user[prop] = value.text
-    this.props.modifyUserData(user)
+    this.setState({
+      user: user
+    })
   }
 
   render() {
@@ -74,7 +77,7 @@ class UserContainer extends Component {
         createUser={this.createUser}
         setUserProp={this.setUserProp}
         showLoader={this.props.userReducer.isProcessing}
-        {...this.props.userReducer}/>
+        user={this.state.user}/>
     )
   }
 }
