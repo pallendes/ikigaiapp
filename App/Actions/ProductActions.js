@@ -4,11 +4,35 @@ import { PRODUCTS } from '../Services/MockProducts';
 export const SHOW_PRODUCTS = 'SHOW_PRODUCTS'
 export const PERSIST_PRODUCT = 'PERSIST_PRODUCT'
 export const DELETE_PRODUCT = 'DELETE_PRODUCT'
+export const BEGIN_LOADING = 'BEGIN_LOADING'
 
-export function showProducts() {
+//@TODO add firebase support
+export const loadProducts = () => (dispatch, getState) => {
+
+  dispatch(beginLoading())
+
+  const { currentUser } = getState().user
+  const { currentSession } = getState().session
+  const { productList } = getState().products
+  console.log('session ', getState().session);
+  //get all products for the session
+  console.log('session ', currentSession.id);
+  let products = productList.find(_product => _product.sessionId === currentSession.id)
+  console.log('products ', products);
+  dispatch(showProducts(products))
+
+}
+
+export const beginLoading = () => {
+  return {
+    type: BEGIN_LOADING
+  }
+}
+
+export function showProducts(products = []) {
   return {
     type: SHOW_PRODUCTS,
-    payload: PRODUCTS
+    payload: products
   }
 }
 

@@ -12,7 +12,7 @@ class UserDetailContainer extends Component {
   render() {
     return (
       <UserDetail
-        user={this.props.userReducer.user}
+        user={this.props.userReducer.currentUser}
         goBack={this.goBack} />
     )
   }

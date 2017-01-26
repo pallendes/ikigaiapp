@@ -1,22 +1,40 @@
 import React, { Component } from 'react'
-import { StyleSheet } from 'react-native'
+import { StyleSheet, TouchableHighlight, Image, Dimensions } from 'react-native'
 import { View,
   Container,
   Button,
   Icon,
   Title,
+  List,
+  ListItem,
   Header,
+  Text,
+  Fab,
   Content } from 'native-base'
+
+var width = Dimensions.get('window').width
 
 const style = StyleSheet.create({
   thumbnailView: {
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    paddingTop: 10
   },
   thumbnail: {
     width: 120,
     height: 120,
     borderRadius: 60
+  },
+  list: {
+    paddingRight: 15
+  },
+  listTextProperty: {
+    fontSize: 14,
+    width: width / 2
+  },
+  listTextDescription: {
+    paddingLeft: 10,
+    fontSize: 14
   }
 })
 
@@ -37,16 +55,37 @@ export default UserDetail = (props) => {
             <Icon name='ios-menu' />
           </Button>
         </Header>
+        <Content>
+          <View style={style.thumbnailView}>
+            <TouchableHighlight onPress={() => openModal()}>
+              <Image
+                style={style.thumbnail}
+                source={userPicture}/>
+            </TouchableHighlight>
+          </View>
+          <List style={style.list}>
+            <ListItem>
+              <Text style={style.listTextProperty}>Name</Text>
+              <Text style={style.listTextDescription}>{props.user.name} {props.user.lastName}</Text>
+            </ListItem>
+            <ListItem>
+              <Text style={style.listTextProperty}>Email</Text>
+              <Text style={style.listTextDescription}>{props.user.email}</Text>
+            </ListItem>
+            <ListItem>
+              <Text style={style.listTextProperty}>Registered Products</Text>
+              <Text style={style.listTextDescription}>{props.user.name}</Text>
+            </ListItem>
+          </List>
+        </Content>
       </Container>
-      <Content>
-        <View style={style.thumbnailView}>
-          <TouchableHighlight onPress={() => openModal()}>
-            <Image
-              style={style.thumbnail}
-              source={userPicture}/>
-          </TouchableHighlight>
-        </View>
-      </Content>
+      <Fab
+        containerStyle={{ marginLeft: 10 }}
+        style={{ backgroundColor: '#5067FF' }}
+        onPress={() => props.showFab()}
+        >
+        <Icon name="md-create" />
+      </Fab>
     </View>
   )
 }

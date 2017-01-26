@@ -4,8 +4,9 @@ import { connect } from 'react-redux'
 import navigateTo from '../Actions/SideBarNav'
 import ImagePicker from 'react-native-image-crop-picker'
 import { createUser, modifyUserData } from '../Actions/UserActions'
-import UserModel from '../Models/UserModel'
+import UserModel, { UserValidators, validateAll, UserModelValidation, validate } from '../Models/UserModel'
 import { ToastAndroid } from 'react-native'
+import { createSession } from '../Actions/SessionActions'
 
 class UserContainer extends Component {
 
@@ -13,14 +14,8 @@ class UserContainer extends Component {
     super(props)
     this.state = {
       modalOpen: false,
-      user: UserModel
-    }
-  }
-
-  componentWillReceiveProps = (newProps) => {
-    if(newProps.userReducer.user) {
-      ToastAndroid.show('User registered successfully!', ToastAndroid.SHORT)
-      this.props.navigateTo('productsContainer', 'userContainer')
+      user: UserModel,
+      userValidation: UserModelValidation
     }
   }
 
@@ -28,9 +23,29 @@ class UserContainer extends Component {
     this.props.navigateTo('productsContainer', 'productsContainer')
   }
 
-  createUser = () => {
+  createUser = async () => {
+
     let user = this.state.user
-    this.props.createUser(user)
+
+    let validModel = validateAll(UserValidators, user).valid
+
+    if(!validModel) {
+      ToastAndroid.show('You have to complete the form correctly before sing up!', ToastAndroid.SHORT)
+      return
+    }
+
+    //create user session
+    await this.props.createSession(user)
+    //if session exists means it was created
+    if(this.props.session.currentSession) {
+      await this.props.createUser(user)
+      if(this.props.userReducer.currentUser) {
+        ToastAndroid.show('User registered successfully!', ToastAndroid.SHORT)
+        this.props.navigateTo('productsContainer', 'userContainer')
+      }
+    } else {
+      ToastAndroid.show(this.props.session.err, ToastAndroid.SHORT)
+    }
   }
 
   handleNewPicture = (from) => {
@@ -60,10 +75,17 @@ class UserContainer extends Component {
   }
 
   setUserProp = (value, prop) => {
-    let user = this.state.user
-    user[prop] = value.text
+
+    let {user, userValidation} = this.state
+
+    if(UserValidators[prop])
+      userValidation[prop] = validate(UserValidators[prop], value)
+
+    user[prop] = value
+
     this.setState({
-      user: user
+      user: user,
+      userValidation: userValidation
     })
   }
 
@@ -77,19 +99,23 @@ class UserContainer extends Component {
         createUser={this.createUser}
         setUserProp={this.setUserProp}
         showLoader={this.props.userReducer.isProcessing}
+        modalOpen={this.state.modalOpen}
+        userValidation={this.state.userValidation}
         user={this.state.user}/>
     )
   }
 }
 
 const mapStateToProps = (state) => ({
-  userReducer: state.user
+  userReducer: state.user,
+  session: state.session
 })
 
 const mapDispatchToProps = (dispatch) => ({
   navigateTo: (route, homeRoute) => dispatch(navigateTo(route, homeRoute)),
   createUser: (user) => dispatch(createUser(user)),
-  modifyUserData: (user) => dispatch(modifyUserData(user))
+  modifyUserData: (user) => dispatch(modifyUserData(user)),
+  createSession: (user) => dispatch(createSession(user))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserContainer)

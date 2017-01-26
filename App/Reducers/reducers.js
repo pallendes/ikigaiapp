@@ -8,6 +8,7 @@ import { authReducer } from './LoginReducer'
 import { userReducer } from './UserReducer'
 import { categoryReducer } from './CategoryReducer'
 import { factoryReducer } from './FactoryReducer'
+import { sessionReducer } from './SessionReducer'
 
 export default combineReducers({
         products: showProducts,
@@ -18,5 +19,6 @@ export default combineReducers({
         auth: authReducer,
         user: userReducer,
         categories: categoryReducer,
-        factories: factoryReducer
+        factories: factoryReducer,
+        session: sessionReducer,
     })

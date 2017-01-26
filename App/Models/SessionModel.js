@@ -1,5 +1,5 @@
 export default SessionModel = {
   id: -1,
-  user: null,
+  userId: null,
   date: null
 }

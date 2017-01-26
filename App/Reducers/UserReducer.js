@@ -3,12 +3,14 @@ import { INIT_USER_CREATION,
   USER_CREATION_FAILED,
   MODIFY_USER_DATA,
   PERSIST_USER,
+  LOGOUT_CURRENT_USER,
   DELETE_USER } from '../Actions/UserActions'
 
 const initialState = {
   isProcessing: false,
   error: null,
-  user: null
+  users: [],
+  currentUser: null
 }
 
 export function userReducer (state = initialState, action) {
@@ -23,7 +25,8 @@ export function userReducer (state = initialState, action) {
       return {
         ...state,
         isProcessing: false,
-        user: action.payload,
+        currentUser: action.payload.currentUser,
+        users: action.payload.users
       }
     case USER_CREATION_FAILED:
       return {
@@ -45,6 +48,11 @@ export function userReducer (state = initialState, action) {
       return {
         ...state,
         user: action.payload
+      }
+    case LOGOUT_CURRENT_USER:
+      return {
+        ...state,
+        currentUser: null
       }
     default:
       return state

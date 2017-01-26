@@ -1,8 +1,8 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add redux-persist
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add validate-model
 
 PATH: 
-  C:\Python27\;C:\Python27\Scripts;C:\Program Files\Docker\Docker\Resources\bin;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files (x86)\MySQL\MySQL Fabric 1.5 & MySQL Utilities 1.5\;C:\Program Files (x86)\MySQL\MySQL Fabric 1.5 & MySQL Utilities 1.5\Doctrine extensions for PHP\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\Git\cmd;C:\Program Files\Git\bin;C:\ProgramData\chocolatey\bin;C:\Program Files\Java\jdk1.8.0_112\bin;C:\Program Files (x86)\Brackets\command;C:\Program Files (x86)\Skype\Phone\;C:\Program Files\nodejs\;C:\Program Files (x86)\Yarn\bin;C:\RailsInstaller\Git\cmd;C:\RailsInstaller\Ruby2.2.0\bin;C:\Users\palle\AppData\Local\Android\android-sdk\tools;C:\Users\palle\AppData\Local\Android\android-sdk\platform-tools;C:\Users\palle\AppData\Roaming\npm;C:\Users\palle\AppData\Local\Yarn\.bin;C:\Users\palle\AppData\Local\atom\bin
+  C:\Python27\;C:\Python27\Scripts;C:\Program Files\Docker\Docker\Resources\bin;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files (x86)\MySQL\MySQL Fabric 1.5 & MySQL Utilities 1.5\;C:\Program Files (x86)\MySQL\MySQL Fabric 1.5 & MySQL Utilities 1.5\Doctrine extensions for PHP\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\Git\cmd;C:\Program Files\Git\bin;C:\ProgramData\chocolatey\bin;C:\Program Files\Java\jdk1.8.0_112\bin;C:\Program Files (x86)\Brackets\command;C:\Program Files (x86)\Skype\Phone\;C:\Program Files\nodejs\;C:\Program Files (x86)\Yarn\bin;C:\RailsInstaller\Git\cmd;C:\RailsInstaller\Ruby2.2.0\bin;C:\Users\palle\AppData\Local\Android\android-sdk\tools;C:\Users\palle\AppData\Local\Android\android-sdk\platform-tools;C:\Users\palle\AppData\Roaming\npm;C:\Users\palle\AppData\Local\Yarn\.bin;C:\Users\palle\AppData\Local\atom\bin;%USERPROFILE%\AppData\Local\Microsoft\WindowsApps;
 
 Yarn version: 
   0.18.1
@@ -38,6 +38,7 @@ npm manifest:
       "react-redux-firebase": "^1.1.5",
       "redux": "^3.6.0",
       "redux-logger": "^2.7.4",
+      "redux-persist": "^4.0.1",
       "redux-promise": "^0.5.3",
       "redux-thunk": "^2.1.0"
     },
@@ -2345,7 +2346,7 @@ Lockfile:
     dependencies:
       jsonify "~0.0.0"
   
-  json-stringify-safe@~5.0.1:
+  json-stringify-safe@^5.0.1, json-stringify-safe@~5.0.1:
     version "5.0.1"
     resolved "https://registry.yarnpkg.com/json-stringify-safe/-/json-stringify-safe-5.0.1.tgz#1296a2d58fd45f19a0f6ce01d65701e2c735b6eb"
   
@@ -2449,7 +2450,7 @@ Lockfile:
       pinkie-promise "^2.0.0"
       strip-bom "^2.0.0"
   
-  lodash-es@^4.2.0, lodash-es@^4.2.1:
+  lodash-es@^4.16.0, lodash-es@^4.2.0, lodash-es@^4.2.1:
     version "4.17.4"
     resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.4.tgz#dcc1d7552e150a0640073ba9cb31d70f032950e7"
   
@@ -3371,6 +3372,14 @@ Lockfile:
     dependencies:
       deep-diff "0.3.4"
   
+  redux-persist@^4.0.1:
+    version "4.0.1"
+    resolved "https://registry.yarnpkg.com/redux-persist/-/redux-persist-4.0.1.tgz#e9a0944224973c1b8953515f27816bcc3a6d7bbc"
+    dependencies:
+      json-stringify-safe "^5.0.1"
+      lodash "^4.11.1"
+      lodash-es "^4.16.0"
+  
   redux-promise@^0.5.3:
     version "0.5.3"
     resolved "https://registry.yarnpkg.com/redux-promise/-/redux-promise-0.5.3.tgz#e97e6c9d3bf376eacb79babe6d906da20112d6d8"
@@ -4135,4 +4144,4 @@ Lockfile:
       window-size "0.1.0"
 
 Trace: 
-  Error: EPERM: operation not permitted, unlink 'C:\Users\palle\Desktop\IkigaiApp\Ikigai\node_modules\acorn-globals\node_modules\.bin'
+  Error: EPERM: operation not permitted, unlink 'C:\Users\palle\Desktop\IkigaiApp\ikigaiapp\node_modules\acorn-globals\node_modules\.bin'

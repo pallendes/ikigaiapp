@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { showProducts } from '../Actions/ProductActions'
+import { showProducts, loadProducts } from '../Actions/ProductActions'
 import ProductList from '../Components/ProductList'
 import React, { Component } from 'react'
 import { showProductDetail } from '../Actions/ProductDetailActions'
@@ -28,7 +28,7 @@ class ProductsContainer extends Component {
     }
   }
 
-  componentWillMount = () => this.props.showProducts()
+  componentWillMount = () => this.props.loadProducts()
 
   goToDetail = (product) => {
     this.props.navigateTo('productDetailContainer', 'productsContainer', product)
@@ -72,7 +72,7 @@ class ProductsContainer extends Component {
 
 const mapDispatchToProps = dispatch => ({
   navigateTo: (route, homeRoute, passProps) => dispatch(navigateTo(route, homeRoute, passProps)),
-  showProducts: () => dispatch(showProducts()),
+  loadProducts: () => dispatch(loadProducts()),
   showProductDetail: () => dispatch(showProductDetail()),
   openDrawer: () => dispatch(openDrawer())
 })

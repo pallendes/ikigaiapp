@@ -24,7 +24,9 @@
     "redux-logger": "^2.7.4",
     "redux-persist": "^4.0.1",
     "redux-promise": "^0.5.3",
-    "redux-thunk": "^2.1.0"
+    "redux-thunk": "^2.1.0",
+    "validate": "^3.0.1",
+    "validate-model": "^0.0.2"
   },
   "devDependencies": {
     "babel-jest": "18.0.0",

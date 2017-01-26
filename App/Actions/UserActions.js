@@ -1,4 +1,5 @@
 import { firebaseAuth, firebaseDb, firebaseStorage, firebaseEnabled } from '../Config/firebase'
+import { createSession } from './SessionActions'
 
 export const INIT_USER_CREATION = 'INIT_USER_CREATION'
 export const USER_CREATED = 'USER_CREATED'
@@ -6,40 +7,80 @@ export const USER_CREATION_FAILED = 'USER_CREATION_FAILED'
 export const MODIFY_USER_DATA = 'MODIFY_USER_DATA'
 export const PERSIST_USER = 'PERSIST_USER'
 export const DELETE_USER = 'DELETE_USER'
+export const LOGOUT_CURRENT_USER = 'LOGOUT_CURRENT_USER'
 
-export function initRegistration() {
+export const initRegistration = () => {
   return {
     type: INIT_USER_CREATION
   }
 }
 
-export function userCreated(user) {
+export const userCreated = (user) => {
   return {
     type: USER_CREATED,
     payload: user
   }
 }
 
-export function userCreationFailed(err) {
+export const userCreationFailed = (err) => {
   return {
     type: USER_CREATION_FAILED,
     error: err
   }
 }
 
-export function createUser (user) {
+export const createUserAndSession = (user) => (dispatch, getState) => {
+
+  const { users } = getState().user
+  //verify user session already exists
+  let userExists = users.find(_user => _user.email === user.email)
+
+  if(userExists) {
+    dispatch(userCreationFailed('User \'' + user.email + '\' already registered'))
+    return user
+  }
+
+  dispatch(createSession(user))
+
+  const { currentSession } = getState().session
+
+  if(userSession) {
+    dispatch(sessionCreationFailed('A session already exists for the user ' + user.email))
+    return user
+  }
+
+  //push user
+  users.push(user)
+
+  dispatch(userCreated({currentUser: user, users})) // local
+  return user
+
+}
+
+export const createUser = (user) => {
   if (firebaseEnabled) {
     return persistToFirebase(user);
   } else {
-    return dispatch => {
-      dispatch(userCreated(user)) // local
+    return (dispatch, getState) => {
+      const { users } = getState().user
+      //verify user session already exists
+      let userExists = users.find(_user => _user.email === user.email)
+
+      if(userExists) {
+        dispatch(userCreationFailed('User \'' + user.email + '\' already registered'))
+        return user
+      }
+
+      users.push(user)
+
+      dispatch(userCreated({currentUser: user, users})) // local
       return user
     }
   }
 }
 
 //@TODO add firebase support
-export function deleteUser(user) {
+export const deleteUser = (user) => {
   if(firebaseEnabled) {
     return {
       type: DELETE_USER
@@ -47,7 +88,7 @@ export function deleteUser(user) {
   }
 }
 
-export function persistUser(user) {
+export const persistUser = (user) => {
   if (firebaseEnabled) {
     return {
       type: persistUser,
@@ -58,14 +99,20 @@ export function persistUser(user) {
   }
 }
 
-export function modifyUserData(user) {
+export const modifyUserData = (user) => {
   return {
     type: MODIFY_USER_DATA,
     payload: user
   }
 }
 
-export function updateUserToFirebase(user) {
+export const logoutCurrentUser = () => {
+  return {
+    type: LOGOUT_CURRENT_USER
+  }
+}
+
+export const updateUserToFirebase = (user) => {
   return dispatch => {
     dispatch(initRegistration())
     let userRef = firebaseDb.ref().child('users/' + firebaseAuth.currentUser.uid)
@@ -78,7 +125,7 @@ export function updateUserToFirebase(user) {
   }
 }
 
-function persistToFirebase (user) {
+export const persistToFirebase = (user) => {
   return dispatch => {
     dispatch(initRegistration())
     return firebaseAuth.createUserWithEmailAndPassword(user.email, user.passwd)

@@ -14,6 +14,7 @@ import { Container,
   Item,
   Grid,
   Col,
+  Row,
   Fab,
   View,
   Title } from 'native-base'
@@ -21,6 +22,7 @@ import { TouchableHighlight, TouchableOpacity, Image } from 'react-native'
 import ImgSwiper from './ImgSwiper'
 import PickerSelector from './PickerSelector'
 import { StyleSheet, Dimensions } from 'react-native'
+import { FormInput, InlineFormInput } from './FormComponents'
 
 var width = Dimensions.get('window').width
 
@@ -80,6 +82,114 @@ const NewProduct
                 <Icon name='ios-add'/>
             </Button>
           </View>
+          <Grid style={{paddingLeft: 15, paddingRight: 15}}>
+            <Row>
+              <FormInput
+                title='Name'
+                valid={props.productValidation.name.valid}
+                validationMessage={props.productValidation.name.messages}
+                modelField='name'
+                iconPosition='right'
+                value={props.product.name}
+                placeholder='Product name...'
+                hideError
+                onChangeText={setProductProps}/>
+            </Row>
+            <Row>
+              <Col style={{paddingRight: 5}}>
+                <FormInput
+                  title='Price (RMB)'
+                  valid={props.productValidation.price.valid}
+                  validationMessage={props.productValidation.price.messages}
+                  modelField='price'
+                  iconPosition='right'
+                  value={props.product.price}
+                  placeholder='0'
+                  hideError
+                  onChangeText={setProductProps}/>
+              </Col>
+              <Col style={{paddingLeft: 5}}>
+                <FormInput
+                  title='CMB'
+                  valid={props.productValidation.CMB.valid}
+                  validationMessage={props.productValidation.CMB.messages}
+                  modelField='CMB'
+                  iconPosition='right'
+                  value={props.product.CMB}
+                  placeholder='0'
+                  hideError
+                  onChangeText={setProductProps}/>
+              </Col>
+            </Row>
+            <Row>
+              <Col style={{paddingRight: 5}}>
+                <FormInput
+                  title='UXB'
+                  valid={props.productValidation.UXB.valid}
+                  validationMessage={props.productValidation.UXB.messages}
+                  modelField='UXB'
+                  iconPosition='right'
+                  value={props.product.UXB}
+                  placeholder='0'
+                  hideError
+                  onChangeText={setProductProps}/>
+              </Col>
+              <Col style={{paddingLeft: 5}}>
+                <FormInput
+                  title='MOQ'
+                  valid={props.productValidation.MOQ.valid}
+                  validationMessage={props.productValidation.MOQ.messages}
+                  modelField='MOQ'
+                  iconPosition='right'
+                  value={props.product.MOQ}
+                  placeholder='0'
+                  hideError
+                  onChangeText={setProductProps}/>
+              </Col>
+            </Row>
+            <Row>
+              <Text style={style.pickerText}>Factory</Text>
+              <Picker
+                iosHeader="Select a Factory"
+                mode="dialog"
+                prompt="Select a Factory..."
+                style={style.picker}
+                selectedValue={props.product.factory}
+                onValueChange={factory => setProductProps({factory}, 'factory')}>
+                {
+                  props.factories.map(factory =>
+                    <Picker.Item label={factory.name}
+                      value={factory.id}
+                      key={factory.id} />
+                  )
+                }
+              </Picker>
+            </Row>
+            <Row>
+              <Text style={style.pickerText}>Category</Text>
+              <Picker
+                iosHeader="Select one"
+                mode="dialog"
+                prompt="Select a Category..."
+                selectedValue={props.categories[0]}
+                onValueChange={category => setProductProps({category}, 'CMB')}>
+                {
+                  props.categories.map(category =>
+                    <Picker.Item label={category.name}
+                      value={category.id}
+                      key={category.id} />
+                  )
+                }
+              </Picker>
+            </Row>
+            <Row>
+              <Button block
+                style={style.button}
+                onPress={() => saveProduct()}>
+                Save
+              </Button>
+            </Row>
+          </Grid>
           <List style={style.list}>
             <ListItem>
               <InputGroup>

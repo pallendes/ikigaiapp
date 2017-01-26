@@ -11,7 +11,14 @@ import { Container,
    Button,
    Spinner,
    Input } from 'native-base'
-import { TouchableHighlight } from 'react-native'
+import { TouchableHighlight, StyleSheet } from 'react-native'
+
+const style = StyleSheet.create({
+  list: {
+    paddingRight: 45,
+    paddingLeft: 30
+  }
+})
 
 export default Login = ({login, register, ...props}) => {
 
@@ -32,17 +39,17 @@ export default Login = ({login, register, ...props}) => {
       <View style={{flex:1, flexDirection: 'row', alignItems: 'center'}}>
         <Content>
           <Text style={{fontSize: 52, textAlign: 'center', padding: 15, color: '#0A69FE'}}>Ikigai</Text>
-          <List>
+          <List style={style.list}>
             <ListItem>
               <InputGroup>
                   <Icon name="ios-person" style={{ color: '#0A69FE' }} />
-                  <Input placeholder="EMAIL" />
+                  <Input placeholder="Email" />
               </InputGroup>
             </ListItem>
             <ListItem>
               <InputGroup>
                 <Icon name="ios-unlock" style={{ color: '#0A69FE' }} />
-                <Input placeholder="PASSWORD" secureTextEntry />
+                <Input placeholder="Password" secureTextEntry />
               </InputGroup>
             </ListItem>
           </List>

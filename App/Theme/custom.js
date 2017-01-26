@@ -136,7 +136,7 @@ export default {
 
     // Icon
     iconFamily: 'Ionicons',
-    iconFontSize: (Platform.OS === 'ios' ) ? 30 : 28,
+    iconFontSize: (Platform.OS === 'ios' ) ? 24 : 22,
     iconMargin: 7,
 
 
@@ -155,7 +155,7 @@ export default {
 
     inputGroupMarginBottom: 10,
     inputHeightBase: 40,
-    inputPaddingLeft: 5,
+    inputPaddingLeft: 0,
 
     get inputPaddingLeftIcon () {
         return this.inputPaddingLeft* 8;

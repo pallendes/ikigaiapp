@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Text, StyleSheet } from 'react-native'
-import { Content, List, ListItem, Thumbnail, View } from 'native-base'
+import { Content, List, ListItem, Thumbnail, View, Icon } from 'native-base'
 import { connect } from 'react-redux'
 import navigateTo from '../Actions/SideBarNav'
 import { logOut } from '../Actions/LoginActions'
@@ -20,6 +20,11 @@ const style = StyleSheet.create({
     backgroundColor: '#4179F7',
     padding: 30,
     paddingBottom: 15
+  },
+  icon: {
+    paddingRight: 10,
+    fontSize: 26,
+    color: '#0A69FE'
   }
 })
 
@@ -35,24 +40,32 @@ class DrawerSideBar extends Component {
   }
 
   render() {
+
+    let pictureUri = this.props.user.currentUser !== null && this.props.user.currentUser.pictureUri !== '' ?
+      {uri: this.props.user.currentUser.pictureUri} : require('../Images/Photo-not-available.png')
+
     return (
       <View>
         <View style={style.sidebarHeader}>
-          <Thumbnail size={100} source={require('../Images/Photo-not-available.png')} />
-          <Text style={style.sidebarText} note>{this.props.user.user ? this.props.user.user.email : 'Annonymous'}</Text>
+          <Thumbnail size={100} source={pictureUri} />
+          <Text style={style.sidebarText} note>{this.props.user.currentUser ? this.props.user.currentUser.email : 'Annonymous'}</Text>
         </View>
         <Content style={style.sidebar}>
           <List>
-            <ListItem button onPress={() => this.goTo('productsContainer')} >
+            <ListItem button iconLeft onPress={() => this.goTo('productsContainer')} >
+              <Icon name="ios-pricetags-outline" style={style.icon} />
               <Text>Products</Text>
             </ListItem>
-            <ListItem button onPress={() => this.goTo('newProductContainer')} >
+            <ListItem button iconLeft onPress={() => this.goTo('newProductContainer')} >
+              <Icon name="ios-add-circle-outline" style={style.icon}/>
               <Text>Create product</Text>
             </ListItem>
-            <ListItem button onPress={() => this.goTo('userDetailContainer')} >
+            <ListItem button iconLeft onPress={() => this.goTo('userDetailContainer')} >
+              <Icon name="ios-person-outline" style={style.icon}/>
               <Text>User Account</Text>
             </ListItem>
-            <ListItem button onPress={() => this.logOut()} >
+            <ListItem button iconLeft onPress={() => this.logOut()} >
+              <Icon name="ios-log-out" style={style.icon}/>
               <Text>Logout</Text>
             </ListItem>
           </List>

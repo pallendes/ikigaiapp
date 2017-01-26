@@ -1028,6 +1028,10 @@ commander@^2.9.0:
   dependencies:
     graceful-readlink ">= 1.0.0"
 
+component-type@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/component-type/-/component-type-1.0.0.tgz#1ed8812e32dd65099d433570757f111ea3d3d871"
+
 compressible@~2.0.5:
   version "2.0.9"
   resolved "https://registry.yarnpkg.com/compressible/-/compressible-2.0.9.tgz#6daab4e2b599c2770dd9e21e7a891b1c5a755425"
@@ -1282,6 +1286,10 @@ ecdsa-sig-formatter@1.0.9:
 ee-first@1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/ee-first/-/ee-first-1.1.1.tgz#590c61156b0ae2f4f0255732a158b266bc56b21d"
+
+eivindfjeldstad-dot@0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/eivindfjeldstad-dot/-/eivindfjeldstad-dot-0.0.1.tgz#22fc976bfaf306e0839a31db8e8213480fafb893"
 
 encoding@^0.1.11:
   version "0.1.12"
@@ -3824,6 +3832,10 @@ type-is@~1.6.6:
     media-typer "0.3.0"
     mime-types "~2.1.13"
 
+typecast@0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/typecast/-/typecast-0.0.1.tgz#fffb75dcb6bdf1def8e293b6b6e893d6c1ed19de"
+
 ua-parser-js@^0.7.9:
   version "0.7.12"
   resolved "https://registry.yarnpkg.com/ua-parser-js/-/ua-parser-js-0.7.12.tgz#04c81a99bdd5dc52263ea29d24c6bf8d4818a4bb"
@@ -3874,12 +3886,30 @@ uuid@^3.0.0:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.0.1.tgz#6544bba2dfda8c1cf17e629a3a305e2bb1fee6c1"
 
+validate-model@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/validate-model/-/validate-model-0.0.2.tgz#32a4b0140e98efb50068db7ac477c6963ca30627"
+  dependencies:
+    validator "5.0.0"
+
 validate-npm-package-license@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/validate-npm-package-license/-/validate-npm-package-license-3.0.1.tgz#2804babe712ad3379459acfbe24746ab2c303fbc"
   dependencies:
     spdx-correct "~1.0.0"
     spdx-expression-parse "~1.0.0"
+
+validate@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/validate/-/validate-3.0.1.tgz#798487b3a146ceb3c903ecd986c7e67db9478652"
+  dependencies:
+    component-type "1.0.0"
+    eivindfjeldstad-dot "0.0.1"
+    typecast "0.0.1"
+
+validator@5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/validator/-/validator-5.0.0.tgz#c0b54a5b831f8ef8f6dd6fe49a9c707600ec65ef"
 
 vary@~1.0.1:
   version "1.0.1"

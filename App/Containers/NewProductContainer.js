@@ -6,10 +6,11 @@ import { launchCamera, pictureTaken, closeCamera } from '../Actions/CameraAction
 import ImagePicker from 'react-native-image-crop-picker'
 import { List, ListItem, Text } from 'native-base'
 import { getCategories } from '../Actions/CategoryActions'
-import ProductModel from '../Models/ProductModel'
+import ProductModel, { ProductModelValidation, ProductValidators } from '../Models/ProductModel'
 import { getFactories } from '../Actions/FactoryActions'
 import { persistProduct } from '../Actions/ProductActions'
 import { ToastAndroid } from 'react-native'
+import { validate, validateAll } from '../Models/ValidateModel'
 
 class NewProductContainer extends Component {
 
@@ -17,7 +18,8 @@ class NewProductContainer extends Component {
     super(props)
     this.state = {
       modalOpen: false,
-      product: ProductModel
+      product: ProductModel,
+      productValidation: ProductModelValidation
     }
   }
 
@@ -60,11 +62,19 @@ class NewProductContainer extends Component {
   }
 
   setProductProps = (value, prop) => {
-    let product = this.state.product
-    product[prop] = value.text
+
+    let { product, productValidation } = this.state
+
+    if(ProductValidators[prop])
+      productValidation[prop] = validate(ProductValidators[prop], value)
+
+    product[prop] = value
+
     this.setState({
-      product: product
+      product: product,
+      productValidation: productValidation
     })
+
   }
 
   saveProduct = () => {
@@ -72,9 +82,13 @@ class NewProductContainer extends Component {
     let prevLength = this.props.products.length
     let product = this.state.product
     product.id = prevLength > 0 ? this.props.products[this.props.products.length - 1].id + 1 : 0
+    product.sessionId = this.props.session.currentSession.id
+
     let products = this.props.products
     products.push(product)
+
     this.props.persistProduct(products)
+
     //@TODO mejorar esto
     if(this.props.products.length > prevLength) {
       this.props.navigateTo('productsContainer', 'productsContainer')
@@ -112,6 +126,8 @@ class NewProductContainer extends Component {
         setProductProps={this.setProductProps}
         product={this.state.product}
         openDrawer={this.openDrawer}
+        product={this.state.product}
+        productValidation={this.state.productValidation}
         {...this.props} />
     )
   }
@@ -123,6 +139,7 @@ mapStateToProps = state => ({
   categories: state.categories.categories,
   factories: state.factories.factories,
   products: state.products.productList,
+  session: state.session
 })
 
 mapDispatchToProps = (dispatch) => ({

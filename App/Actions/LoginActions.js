@@ -1,4 +1,6 @@
-import { firebaseAuth, firebaseDb } from '../Config/firebase'
+import { firebaseAuth, firebaseDb, firebaseEnabled } from '../Config/firebase'
+import { destroyCurrentSession } from './SessionActions'
+import { logoutCurrentUser } from './UserActions'
 
 export const INIT_AUTH = 'INIT_AUTH'
 export const LOGIN_ERROR = 'LOGIN_ERROR'
@@ -33,13 +35,29 @@ export function authenticate(email, passwd) {
     }
 }
 
-export function logOut() {
-  return dispatch => {
-    dispatch(initLogOut())
-    return firebaseAuth.signOut()
-      .then(result => dispatch(logOutSuccess()))
-      .catch(err => dispatch(logOutError(err)))
+export const logOut = () => (dispatch, getState) => {
+  if(!firebaseEnabled) {
+    localLogOut(dispatch, getState)
+  } else {
+    return firebaseLogOut(dispatch)
   }
+}
+
+const localLogOut = (dispatch, getState) => {
+
+  const { currentSession } = getState().session
+  const { currentUser } = getState().user
+
+  dispatch(destroyCurrentSession())
+  dispatch(logoutCurrentUser())
+
+}
+
+const firebaseLogOut = dispatch => {
+  dispatch(initLogOut())
+  return firebaseAuth.signOut()
+    .then(result => dispatch(logOutSuccess()))
+    .catch(err => dispatch(logOutError(err)))
 }
 
 export function signInSuccess(result) {
