@@ -1,4 +1,5 @@
-# README #
+# ikigaiapp
+react-native app for store products
 
-* Ya shoro npm install o yarn install
+* npm install o yarn install
 * react-native run-android
