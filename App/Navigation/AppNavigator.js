@@ -82,7 +82,7 @@ class AppNavigator extends Component {
       case 'userDetailContainer':
         return <UserDetailContainer />
       case 'newProductContainer':
-        return <NewProductContainer />
+        return <NewProductContainer {...props.scene.route.passProps}/>
       default :
         return <LoginContainer />;
     }

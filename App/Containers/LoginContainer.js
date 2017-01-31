@@ -8,18 +8,47 @@ import { authenticate } from '../Actions/LoginActions'
 
 class LoginContainer extends Component {
 
-  componentWillReceiveProps = (nextProps) => {
-    if (nextProps.auth.authenticated) {
-      this.props.navigateTo('productsContainer', 'loginContainer')
+  constructor(props) {
+    super(props)
+    this.state = {
+      login: {
+        userEmail: '',
+        passwd: ''
+      }
     }
   }
 
-  login = (userEmail, passwd) => {
+  componentWillReceiveProps = (nextProps) => {
+    // if (nextProps.auth.authenticated) {
+    //   this.props.navigateTo('productsContainer', 'loginContainer')
+    // }
+  }
 
-    userEmail = 'allendes91@gmail.com'
-    passwd = '1234567'
+  login = async () => {
 
-    this.props.authenticate(userEmail, passwd)
+    try {
+      await this.props.authenticate(this.state.login.userEmail, this.state.login.passwd)
+    } catch(err) {
+      console.error('err ', err);
+      ToastAndroid.show('An error has ocurred', ToastAndroid.SHORT)
+    }
+
+    if(this.props.auth.authenticated) {
+      this.props.navigateTo('productsContainer', 'loginContainer')
+    } else {
+      ToastAndroid.show(this.props.auth.errorMessage, ToastAndroid.SHORT)
+    }
+
+  }
+
+  handleChangeText = (value, prop) => {
+
+    let login = this.state.login
+    login[prop] = value
+
+    this.setState({
+      login: login
+    })
 
   }
 
@@ -31,6 +60,7 @@ class LoginContainer extends Component {
     return <Login
               login={this.login}
               register={this.register}
+              handleChangeText={this.handleChangeText}
               {...this.props}/>
   }
 }

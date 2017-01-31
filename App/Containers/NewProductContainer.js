@@ -16,10 +16,25 @@ class NewProductContainer extends Component {
 
   constructor(props) {
     super(props)
+
+    let _productModel = null
+    let isNewProduct = true
+
+    if(props.selectedProduct) {
+      _productModel = Object.assign({}, props.selectedProduct)
+      _productModel.pictures = props.selectedProduct.pictures.slice() //array copy
+      isNewProduct = false
+    } else {
+      //temporal fix
+      _productModel = Object.assign({}, ProductModel)
+      _productModel.pictures = []
+    }
+
     this.state = {
       modalOpen: false,
-      product: ProductModel,
-      productValidation: ProductModelValidation
+      product: _productModel,
+      productValidation: Object.assign({}, ProductModelValidation),
+      isNewProduct: isNewProduct
     }
   }
 
@@ -52,7 +67,7 @@ class NewProductContainer extends Component {
     } else {
       ImagePicker.openPicker({})
         .then(image => {
-          let product = this.state.product
+          let product = Object.assign({}, this.state.product)
           product.pictures.push(image.path)
           this.setState({
             product: product
@@ -77,17 +92,32 @@ class NewProductContainer extends Component {
 
   }
 
-  saveProduct = () => {
+  saveProduct = async () => {
 
     let prevLength = this.props.products.length
-    let product = this.state.product
+    let product = this.copyProduct()
+
+    if(!validateAll(ProductValidators, product).valid) {
+      ToastAndroid.show('You have to complete the form correctly before save!', ToastAndroid.SHORT)
+      return
+    }
+
     product.id = prevLength > 0 ? this.props.products[this.props.products.length - 1].id + 1 : 0
     product.sessionId = this.props.session.currentSession.id
 
-    let products = this.props.products
-    products.push(product)
+    //temporal fix
+    if (!product.factory.id) {
+      product.factory = Object.assign({}, this.props.factories[0])
+    }
 
-    this.props.persistProduct(products)
+    //temporal fix
+    if(!product.category.id) {
+      product.category = Object.assign({}, this.props.categories[0])
+    }
+
+    const products = this.props.products.concat(product)
+
+    await this.props.persistProduct(products)
 
     //@TODO mejorar esto
     if(this.props.products.length > prevLength) {
@@ -95,6 +125,32 @@ class NewProductContainer extends Component {
       ToastAndroid.show('Your peoduct was created succesfully!', ToastAndroid.SHORT)
     }
 
+  }
+
+  saveChanges = () => {
+
+    const product = this.copyProduct()
+    const productIndex = this.props.products.findIndex(_product => _product.id === product.id)
+
+    const products = [
+      ...this.props.products.slice(0, productIndex),
+      product,
+      ...this.props.products.slice(productIndex + 1)
+    ]
+
+    this.props.persistProduct(products)
+
+    this.props.navigateTo('productsContainer', 'productsContainer')
+    ToastAndroid.show('Your peoduct was modified succesfully!', ToastAndroid.SHORT)
+
+  }
+
+  copyProduct = () => {
+    let product = Object.assign({}, this.state.product)
+    product.pictures = this.state.product.pictures.slice()
+    product.category = Object.assign({}, this.state.product.category)
+    product.factory = Object.assign({}, this.state.product.factory)
+    return product
   }
 
   openModal = () => {
@@ -127,6 +183,8 @@ class NewProductContainer extends Component {
         product={this.state.product}
         openDrawer={this.openDrawer}
         product={this.state.product}
+        isNewProduct={this.state.isNewProduct}
+        saveChanges={this.saveChanges}
         productValidation={this.state.productValidation}
         {...this.props} />
     )

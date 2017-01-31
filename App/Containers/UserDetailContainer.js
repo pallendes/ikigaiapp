@@ -13,6 +13,7 @@ class UserDetailContainer extends Component {
     return (
       <UserDetail
         user={this.props.userReducer.currentUser}
+        products={this.props.products}
         goBack={this.goBack} />
     )
   }
@@ -20,7 +21,8 @@ class UserDetailContainer extends Component {
 }
 
 const mapStateToProps = state => ({
-  userReducer: state.user
+  userReducer: state.user,
+  products: state.products.productList
 })
 
 const mapDispatchToProps = dispatch => ({

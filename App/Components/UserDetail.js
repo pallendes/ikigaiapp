@@ -9,6 +9,8 @@ import { View,
   ListItem,
   Header,
   Text,
+  Card,
+  CardItem,
   Fab,
   Content } from 'native-base'
 
@@ -21,9 +23,9 @@ const style = StyleSheet.create({
     paddingTop: 10
   },
   thumbnail: {
-    width: 120,
-    height: 120,
-    borderRadius: 60
+    width: 150,
+    height: 150,
+    borderRadius: 75
   },
   list: {
     paddingRight: 15
@@ -57,6 +59,22 @@ export default UserDetail = (props) => {
         </Header>
         <Content>
           <View style={style.thumbnailView}>
+            <Image
+              style={style.thumbnail}
+              source={userPicture}/>
+          </View>
+          <Card style={{margin: 15, marginTop: 15}}>
+            <CardItem header>
+              <Text style={style.listTextDescription}>{props.user.name} {props.user.lastName}</Text>
+            </CardItem>
+            <CardItem>
+              <Text style={style.listTextDescription}>{props.user.email}</Text>
+            </CardItem>
+            <CardItem>
+              <Text style={style.listTextDescription}>{props.products.length} products registered</Text>
+            </CardItem>
+          </Card>
+          {/* <View style={style.thumbnailView}>
             <TouchableHighlight onPress={() => openModal()}>
               <Image
                 style={style.thumbnail}
@@ -74,9 +92,9 @@ export default UserDetail = (props) => {
             </ListItem>
             <ListItem>
               <Text style={style.listTextProperty}>Registered Products</Text>
-              <Text style={style.listTextDescription}>{props.user.name}</Text>
+              <Text style={style.listTextDescription}>{props.products.length}</Text>
             </ListItem>
-          </List>
+          </List> */}
         </Content>
       </Container>
       <Fab

@@ -126,6 +126,7 @@ const UserRegistry = ({goBack, handleNewPicture, openModal, closeModal, createUs
                 valid={props.userValidation.passwd.valid}
                 validationMessage={props.userValidation.passwd.messages}
                 modelField='passwd'
+                secureTextEntry
                 value={props.user.passwd}
                 placeholder='Password'
                 icon='ios-lock-outline'

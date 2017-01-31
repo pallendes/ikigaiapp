@@ -35,6 +35,7 @@
 		F77D1B2A3DE54CC7AEFFCCEA /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2B712C22F3754630B36ACB75 /* Zocial.ttf */; };
 		59716723AA2E426FAF52B924 /* libRCTCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B1BD46B85B53450DABAAACD8 /* libRCTCamera.a */; };
 		8A5F0E330F1145ABB39CB748 /* libimageCropPicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5101E492A91B4161B2603895 /* libimageCropPicker.a */; };
+		FE65307E026642C1B6739845 /* libRNFileSystem.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 64CD677B357349DB9410149B /* libRNFileSystem.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -169,6 +170,8 @@
 		B1BD46B85B53450DABAAACD8 /* libRCTCamera.a */ = {isa = PBXFileReference; name = "libRCTCamera.a"; path = "libRCTCamera.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		18BC896478484FBA9D7BE661 /* ImageCropPicker.xcodeproj */ = {isa = PBXFileReference; name = "ImageCropPicker.xcodeproj"; path = "../node_modules/react-native-image-crop-picker/ios/ImageCropPicker.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		5101E492A91B4161B2603895 /* libimageCropPicker.a */ = {isa = PBXFileReference; name = "libimageCropPicker.a"; path = "libimageCropPicker.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		9D33AE701999475BA4F2ADB4 /* RNFileSystem.xcodeproj */ = {isa = PBXFileReference; name = "RNFileSystem.xcodeproj"; path = "../node_modules/react-native-filesystem/ios/RNFileSystem.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		64CD677B357349DB9410149B /* libRNFileSystem.a */ = {isa = PBXFileReference; name = "libRNFileSystem.a"; path = "libRNFileSystem.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -198,6 +201,7 @@
 				BE039F80C9BD41A1A20E3801 /* libRNVectorIcons.a in Frameworks */,
 				59716723AA2E426FAF52B924 /* libRCTCamera.a in Frameworks */,
 				8A5F0E330F1145ABB39CB748 /* libimageCropPicker.a in Frameworks */,
+				FE65307E026642C1B6739845 /* libRNFileSystem.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -333,6 +337,7 @@
 				21591D2A6E5F42AF919B6629 /* RNVectorIcons.xcodeproj */,
 				B8944610363C4220B041F172 /* RCTCamera.xcodeproj */,
 				18BC896478484FBA9D7BE661 /* ImageCropPicker.xcodeproj */,
+				9D33AE701999475BA4F2ADB4 /* RNFileSystem.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -694,6 +699,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 			};
 			name = Debug;
@@ -710,6 +716,7 @@
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Ikigai.app/Ikigai";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -793,6 +800,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-vector-icons\RNVectorIconsManager",
 					"$(SRCROOT)\..\node_modules\react-native-camera\ios",
 					"$(SRCROOT)\..\node_modules\react-native-image-crop-picker\ios/**",
+					"$(SRCROOT)\..\node_modules\react-native-filesystem\ios\RNFileSystem",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -836,6 +844,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-vector-icons\RNVectorIconsManager",
 					"$(SRCROOT)\..\node_modules\react-native-camera\ios",
 					"$(SRCROOT)\..\node_modules\react-native-image-crop-picker\ios/**",
+					"$(SRCROOT)\..\node_modules\react-native-filesystem\ios\RNFileSystem",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;

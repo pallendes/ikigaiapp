@@ -1,6 +1,6 @@
 import { firebaseAuth, firebaseDb, firebaseEnabled } from '../Config/firebase'
-import { destroyCurrentSession } from './SessionActions'
-import { logoutCurrentUser } from './UserActions'
+import { destroyCurrentSession, registerCurrentSession } from './SessionActions'
+import { logoutCurrentUser, registerLoggedUser } from './UserActions'
 
 export const INIT_AUTH = 'INIT_AUTH'
 export const LOGIN_ERROR = 'LOGIN_ERROR'
@@ -21,18 +21,38 @@ export function initLogOut() {
   }
 }
 
-export function authenticate(email, passwd) {
-    return dispatch => {
+export const authenticate = (email, passwd) => (dispatch, getState) => {
+
+    if(firebaseEnabled) {
       dispatch(initAuth())
       return firebaseAuth.signInWithEmailAndPassword(email, passwd)
         .then(result => {
-          dispatch(signInSuccess(result))
+          dispatch(signInSuccess(result.user))
         })
         .catch(err => {
           console.log('authenticate error: ', err)
-          dispatch(signInError(err))
+          dispatch(signInError(err.message))
         })
-    }
+  } else {
+
+    let { users } = getState().user
+    let user = users.find(_user => _user.email === email)
+
+    let { sessions } = getState().session
+    let currentSession = sessions.find(_session => _session.userId === email)
+
+    if(user) {
+      if(user.passwd !== passwd)
+        dispatch(signInError('Invalid password for the user ' + user.email))
+      else {
+        dispatch(signInSuccess(user))
+        dispatch(registerLoggedUser(user))
+        dispatch(registerCurrentSession(currentSession))
+      }
+    } else
+      dispatch(signInError('Invalid username or password'))
+
+  }
 }
 
 export const logOut = () => (dispatch, getState) => {
@@ -60,17 +80,17 @@ const firebaseLogOut = dispatch => {
     .catch(err => dispatch(logOutError(err)))
 }
 
-export function signInSuccess(result) {
+export function signInSuccess(user) {
   return {
     type: LOGIN_SUCCESS,
-    payload: result.user
+    payload: user
   }
 }
 
 export function signInError(err) {
   return {
     type: LOGIN_ERROR,
-    payload: err.message
+    payload: err
   }
 }
 

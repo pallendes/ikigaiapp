@@ -16,27 +16,27 @@ const style = StyleSheet.create({
 const ProductList = (props) => {
 
   let list = null;
+  let productsExists = false
 
-  if(props.products.length > 0) {
-    list =
-      <List style={style.list}>
-        {
-          props.products.map((product) =>
-            <ProductItem
-              key={product.id}
-              product={product}
-              goToDetail={props.goToDetail}
-              />
-          )
-        }
-      </List>
-  } else {
-    list = <Text style={style.text}>Press the '+' button to begin adding products...</Text>
-  }
+  list =
+    <List style={style.list}>
+      {
+        props.products.map((product) => {
+          if(props.currentSession && product.sessionId === props.currentSession.id) {
+            productsExists = true
+            return <ProductItem
+                      key={product.id}
+                      product={product}
+                      goToDetail={props.goToDetail}
+                      />
+          }
+        })
+      }
+    </List>
 
   return (
     <View>
-      {list}
+      {productsExists ? list : <Text style={style.text}>Press the '+' button to begin adding products...</Text>}
     </View>
   )
 }

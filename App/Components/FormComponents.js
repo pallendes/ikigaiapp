@@ -102,6 +102,8 @@ export class FormInput extends Component {
           <Input
             placeholder={this.props.placeholder ? this.props.placeholder : ''}
             value={this.props.value}
+            multiline={this.props.multiline !== undefined}
+            secureTextEntry={this.props.secureTextEntry !== undefined}
             style={style.input}
             onChangeText={(text) => {
               this.props.onChangeText({text}.text, this.props.modelField);
@@ -113,47 +115,4 @@ export class FormInput extends Component {
       </View>
     )
   }
-}
-
-export class InlineFormInput extends Component {
-
-  constructor(props) {
-    super(props)
-    this.state = {
-      touched: false
-    }
-  }
-
-  render() {
-
-    let validationError = null
-    let valid = false
-
-    if(this.props.validationMessage) {
-      validationError = this.props.validationMessage.length > 0 ? this.props.validationMessage[0] : this.props.validationMessage
-    }
-
-    //if this.props.valid is not specified the model will not be validated
-    valid = this.props.valid === undefined ? true : this.props.valid
-
-    return(
-      <View>
-        <InputGroup
-          error={!valid}
-          success={this.state.touched && valid}>
-          <Input
-            placeholder={this.props.placeholder ? this.props.placeholder : ''}
-            inlineLabel
-            label={this.props.label}
-            onChangeText={(text) => {
-              this.props.onChangeText({text}.text, this.props.modelField);
-              this.setState({touched: true})
-              }
-            }/>
-        </InputGroup>
-        <Text note style={style.errorText}>{validationError}</Text>
-      </View>
-    )
-  }
-
 }

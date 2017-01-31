@@ -7,19 +7,19 @@ const {
   pushRoute,
 } = actions;
 
-export default function navigateTo(route, homeRoute, passProps = {}) {
-  return (dispatch, getState) => {
-    const navigation = getState().navigation;
-    const currentRouteKey = navigation.routes[navigation.routes.length - 1].key;
+export default navigateTo = (route, homeRoute, passProps = {}) => (dispatch, getState) => {
 
-    dispatch(closeDrawer());
+    const navigation = getState().navigation
+    const currentRouteKey = navigation.routes[navigation.routes.length - 1].key
+
+    dispatch(closeDrawer())
 
     if (currentRouteKey !== homeRoute && route !== homeRoute) {
-      dispatch(replaceAt(currentRouteKey, { key: route, index: 1, passProps: passProps }, navigation.key));
+      dispatch(replaceAt(currentRouteKey, { key: route, index: 1, passProps: passProps }, navigation.key))
     } else if (currentRouteKey !== homeRoute && route === homeRoute) {
-      dispatch(popRoute(navigation.key));
+      dispatch(popRoute(navigation.key))
     } else if (currentRouteKey === homeRoute && route !== homeRoute) {
-      dispatch(pushRoute({ key: route, index: 1, passProps: passProps  }, navigation.key));
+      dispatch(pushRoute({ key: route, index: 1, passProps: passProps  }, navigation.key))
     }
-  };
+
 }

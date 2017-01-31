@@ -2,9 +2,14 @@ import React, { Proptypes } from 'react'
 import { ListItem, Thumbnail, Text } from 'native-base'
 
 const ProductItem = (props) => {
+  console.log(props);
+
+  let pictureUri = props.product.pictures.length > 0 ?
+    {uri: props.product.pictures[0]} : require('../Images/Photo-not-available.png')
+
   return (
     <ListItem onPress={() => props.goToDetail({selectedProduct: props.product})}>
-      <Thumbnail square size={80} source={require('../Images/Photo-not-available.png')}/>
+      <Thumbnail square size={80} source={pictureUri}/>
       <Text>{props.product.name}</Text>
       <Text note>
         {props.product.description.substring(0, 100)}

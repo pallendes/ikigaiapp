@@ -25,9 +25,9 @@ class UserContainer extends Component {
 
   createUser = async () => {
 
-    let user = this.state.user
+    const user = this.state.user
 
-    let validModel = validateAll(UserValidators, user).valid
+    const validModel = validateAll(UserValidators, user).valid
 
     if(!validModel) {
       ToastAndroid.show('You have to complete the form correctly before sing up!', ToastAndroid.SHORT)
@@ -76,7 +76,7 @@ class UserContainer extends Component {
 
   setUserProp = (value, prop) => {
 
-    let {user, userValidation} = this.state
+    const {user, userValidation} = this.state
 
     if(UserValidators[prop])
       userValidation[prop] = validate(UserValidators[prop], value)

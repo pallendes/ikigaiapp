@@ -9,17 +9,16 @@ export const BEGIN_LOADING = 'BEGIN_LOADING'
 //@TODO add firebase support
 export const loadProducts = () => (dispatch, getState) => {
 
-  dispatch(beginLoading())
+  // dispatch(beginLoading())
+  //
+  // const { currentUser } = getState().user
+  // const { currentSession } = getState().session
+  // const { productList } = getState().products
+  //
+  // //get all products for the session
+  // let products = productList.filter(_product => _product.sessionId === currentSession.id)
 
-  const { currentUser } = getState().user
-  const { currentSession } = getState().session
-  const { productList } = getState().products
-  console.log('session ', getState().session);
-  //get all products for the session
-  console.log('session ', currentSession.id);
-  let products = productList.find(_product => _product.sessionId === currentSession.id)
-  console.log('products ', products);
-  dispatch(showProducts(products))
+  dispatch(showProducts(getState().products.productList))
 
 }
 

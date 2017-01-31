@@ -1,12 +1,12 @@
 export default ProductModel = {
   id: 0,
-  name: '',
+  name: 'The product name',
   pictures: [],
   description: '',
-  price: '0',
-  CBM: 0,
-  UXB: 0,
-  MOQ: 0,
+  price: '1234',
+  CBM: '3124',
+  UXB: '1233',
+  MOQ: '1233',
   factory: {},
   category: {},
   sessionId: ''

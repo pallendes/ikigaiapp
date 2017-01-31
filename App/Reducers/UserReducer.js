@@ -4,7 +4,8 @@ import { INIT_USER_CREATION,
   MODIFY_USER_DATA,
   PERSIST_USER,
   LOGOUT_CURRENT_USER,
-  DELETE_USER } from '../Actions/UserActions'
+  DELETE_USER,
+  REGISTER_LOGGED_USER } from '../Actions/UserActions'
 
 const initialState = {
   isProcessing: false,
@@ -54,6 +55,12 @@ export function userReducer (state = initialState, action) {
         ...state,
         currentUser: null
       }
+    case REGISTER_LOGGED_USER: {
+      return {
+        ...state,
+        currentUser: action.payload
+      }
+    }
     default:
       return state
   }

@@ -17,6 +17,8 @@ if (process.env.NODE_ENV !== 'production') {
 const store = createStore(reducers, applyMiddleware(...middlewares));
 
 // const store = createStore(reducers, applyMiddleware(...middlewares), autoRehydrate());
-// persistStore(store, { storage: AsyncStorage, blacklist: ['navigation'] })
+// let presistedStore = persistStore(store, { storage: AsyncStorage, blacklist: ['navigation'] })
+
+// presistedStore.purge()
 
 export default store;

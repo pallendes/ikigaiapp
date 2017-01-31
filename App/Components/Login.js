@@ -43,13 +43,16 @@ export default Login = ({login, register, ...props}) => {
             <ListItem>
               <InputGroup>
                   <Icon name="ios-person" style={{ color: '#0A69FE' }} />
-                  <Input placeholder="Email" />
+                  <Input placeholder="Email"
+                    onChangeText={(text) => props.handleChangeText({text}.text, 'userEmail')} />
               </InputGroup>
             </ListItem>
             <ListItem>
               <InputGroup>
                 <Icon name="ios-unlock" style={{ color: '#0A69FE' }} />
-                <Input placeholder="Password" secureTextEntry />
+                <Input placeholder="Password"
+                  secureTextEntry
+                  onChangeText={(text) => props.handleChangeText({text}.text, 'passwd')} />
               </InputGroup>
             </ListItem>
           </List>

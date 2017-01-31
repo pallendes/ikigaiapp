@@ -4,7 +4,7 @@ export default UserModel = {
   email: 'allendes91@gmail.com',
   name: 'asdasdasd',
   lastName: 'asdasdasd',
-  passwd: 'asdasdasasda',
+  passwd: '12345678',
   pictureUri: ''
 }
 

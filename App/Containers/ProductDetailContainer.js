@@ -30,13 +30,17 @@ class ProductDetailContainer extends Component {
     )
   }
 
+  editProduct = (product) => {
+    this.props.navigateTo('newProductContainer', 'productsContainer', {selectedProduct: product})
+  }
+
   deleteProduct = (product) => {
 
     let productIndex = this.props.products.findIndex(_product => _product.id === product.id)
     let prevLength = this.props.products.length
 
     if (productIndex > -1){
-      let products = [...this.props.products.slice(0, productIndex),
+      const products = [...this.props.products.slice(0, productIndex),
         ...this.props.products.slice(productIndex + 1)]
       this.props.deleteProduct(products)
     }
@@ -69,6 +73,7 @@ class ProductDetailContainer extends Component {
         goBack={this.goBack}
         fabActive={this.state.fabActive}
         showFab={this.showFab}
+        editProduct={this.editProduct}
         confirmDeleteProduct={this.confirmDeleteProduct}
         {...product}/>
     )
@@ -76,7 +81,7 @@ class ProductDetailContainer extends Component {
 }
 
 mapDispatchToProps = (dispatch) => ({
-  navigateTo: (route, homeRoute) => dispatch(navigateTo(route, homeRoute)),
+  navigateTo: (route, homeRoute, passProps) => dispatch(navigateTo(route, homeRoute, passProps)),
   deleteProduct: (products) => dispatch(deleteProduct(products)),
   showProductDetail,
 })

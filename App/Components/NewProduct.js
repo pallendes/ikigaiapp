@@ -39,11 +39,17 @@ const style = StyleSheet.create({
   picker: {
 
   },
+  pickerCol: {
+    alignSelf: 'center'
+  },
   pickerText: {
-    width: width / 3,
-    height: 30,
-    color: '#222222',
-    textAlign: 'center'
+    // color: '#222222',
+    // textAlign: 'center'
+    fontSize: 12,
+    fontWeight: 'bold',
+    color: '#808080',
+    paddingBottom: 0,
+    paddingLeft: 0
   }
 })
 
@@ -57,6 +63,7 @@ const NewProduct
     setProductProps,
     saveProduct,
     openDrawer,
+    saveChanges,
     ...props}) => {
 
   let picture
@@ -148,141 +155,59 @@ const NewProduct
               </Col>
             </Row>
             <Row>
-              <Text style={style.pickerText}>Factory</Text>
-              <Picker
-                iosHeader="Select a Factory"
-                mode="dialog"
-                prompt="Select a Factory..."
-                style={style.picker}
-                selectedValue={props.product.factory}
-                onValueChange={factory => setProductProps({factory}, 'factory')}>
-                {
-                  props.factories.map(factory =>
-                    <Picker.Item label={factory.name}
-                      value={factory.id}
-                      key={factory.id} />
-                  )
-                }
-              </Picker>
+              <Col style={style.pickerCol}>
+                <Text note style={style.pickerText}>Factory</Text>
+                <Picker
+                  iosHeader="Select a Factory"
+                  prompt="Select a Factory..."
+                  mode="dropdown" 
+                  style={style.picker}
+                  selectedValue={props.product.factory.id}
+                  onValueChange={value => setProductProps(props.factories[value], 'factory')}>
+                  {
+                    props.factories.map(factory =>
+                      <Picker.Item label={factory.name}
+                        value={factory.id}
+                        key={factory.id} />
+                    )
+                  }
+                </Picker>
+              </Col>
+              <Col>
+                <Text note style={style.pickerText}>Category</Text>
+                <Picker
+                  iosHeader="Select one"
+                  prompt="Select a Category..."
+                  mode="dropdown"
+                  style={style.picker}
+                  selectedValue={props.product.category.id}
+                  onValueChange={value => setProductProps(props.categories[value], 'category')}>
+                  {
+                    props.categories.map(category =>
+                      <Picker.Item label={category.name}
+                        value={category.id}
+                        key={category.id} />
+                    )
+                  }
+                </Picker>
+              </Col>
             </Row>
             <Row>
-              <Text style={style.pickerText}>Category</Text>
-              <Picker
-                iosHeader="Select one"
-                mode="dialog"
-                prompt="Select a Category..."
-                selectedValue={props.categories[0]}
-                onValueChange={category => setProductProps({category}, 'CMB')}>
-                {
-                  props.categories.map(category =>
-                    <Picker.Item label={category.name}
-                      value={category.id}
-                      key={category.id} />
-                  )
-                }
-              </Picker>
-            </Row>
-            <Row>
-              <Button block
-                style={style.button}
-                onPress={() => saveProduct()}>
-                Save
-              </Button>
+              <FormInput
+                title='Description'
+                modelField='description'
+                iconPosition='right'
+                value={props.product.description}
+                multiline
+                placeholder='Enter a description...'
+                hideError
+                onChangeText={setProductProps}/>
             </Row>
           </Grid>
-          <List style={style.list}>
-            <ListItem>
-              <InputGroup>
-                <Input inlineLabel
-                  label="Name"
-                  placeholder="The product name..."
-                  onChangeText={text => setProductProps({text}, 'name')}/>
-              </InputGroup>
-            </ListItem>
-            <ListItem>
-              <InputGroup>
-                <Input inlineLabel
-                  label="Price (RMB)"
-                  keyboardType="numeric"
-                  placeholder="$"
-                  onChangeText={text => setProductProps({text}, 'price')}/>
-              </InputGroup>
-            </ListItem>
-            <ListItem>
-              <InputGroup>
-                <Input inlineLabel
-                  label="CBM"
-                  placeholder="$"
-                  keyboardType="numeric"
-                  onChangeText={text => setProductProps({text}, 'CMB')}/>
-              </InputGroup>
-            </ListItem>
-            <ListItem>
-              <InputGroup>
-                <Input inlineLabel
-                  label="UXB"
-                  placeholder="$"
-                  keyboardType="numeric"
-                  onChangeText={text => setProductProps({text}, 'UXB')}/>
-              </InputGroup>
-            </ListItem>
-            <ListItem>
-              <InputGroup>
-                <Input inlineLabel
-                  label="MOQ"
-                  placeholder="$"
-                  keyboardType="numeric"
-                  onChangeText={text => setProductProps({text}, 'MOQ')}/>
-              </InputGroup>
-            </ListItem>
-            <ListItem>
-              <Text style={style.pickerText}>Factory</Text>
-              <Picker
-                iosHeader="Select a Factory"
-                mode="dialog"
-                prompt="Select a Factory..."
-                style={style.picker}
-                selectedValue={props.product.factory}
-                onValueChange={factory => setProductProps({factory}, 'factory')}>
-                {
-                  props.factories.map(factory =>
-                    <Picker.Item label={factory.name}
-                      value={factory.id}
-                      key={factory.id} />
-                  )
-                }
-              </Picker>
-            </ListItem>
-            <ListItem>
-              <Text style={style.pickerText}>Category</Text>
-              <Picker
-                iosHeader="Select one"
-                mode="dialog"
-                prompt="Select a Category..."
-                selectedValue={props.categories[0]}
-                onValueChange={category => setProductProps({category}, 'CMB')}>
-                {
-                  props.categories.map(category =>
-                    <Picker.Item label={category.name}
-                      value={category.id}
-                      key={category.id} />
-                  )
-                }
-              </Picker>
-            </ListItem>
-            <ListItem>
-              <InputGroup>
-                <Input stackedLabel
-                  label="Description"
-                  placeholder="Enter the product description here..."
-                  onChangeText={text => setProductProps({text}, 'description')}/>
-              </InputGroup>
-            </ListItem>
-          </List>
           <Button block
             style={style.button}
-            onPress={() => saveProduct()}>
-            Save
+            onPress={props.isNewProduct ? () => saveProduct() : () => saveChanges()}>
+            {props.isNewProduct ? 'Save' : 'Save changes'}
           </Button>
         </Content>
         <PickerSelector

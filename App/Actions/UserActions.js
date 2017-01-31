@@ -8,6 +8,7 @@ export const MODIFY_USER_DATA = 'MODIFY_USER_DATA'
 export const PERSIST_USER = 'PERSIST_USER'
 export const DELETE_USER = 'DELETE_USER'
 export const LOGOUT_CURRENT_USER = 'LOGOUT_CURRENT_USER'
+export const REGISTER_LOGGED_USER = 'REGISTER_LOGGED_USER'
 
 export const initRegistration = () => {
   return {
@@ -29,32 +30,11 @@ export const userCreationFailed = (err) => {
   }
 }
 
-export const createUserAndSession = (user) => (dispatch, getState) => {
-
-  const { users } = getState().user
-  //verify user session already exists
-  let userExists = users.find(_user => _user.email === user.email)
-
-  if(userExists) {
-    dispatch(userCreationFailed('User \'' + user.email + '\' already registered'))
-    return user
+export const registerLoggedUser = (user) => {
+  return {
+    type: REGISTER_LOGGED_USER,
+    payload: user
   }
-
-  dispatch(createSession(user))
-
-  const { currentSession } = getState().session
-
-  if(userSession) {
-    dispatch(sessionCreationFailed('A session already exists for the user ' + user.email))
-    return user
-  }
-
-  //push user
-  users.push(user)
-
-  dispatch(userCreated({currentUser: user, users})) // local
-  return user
-
 }
 
 export const createUser = (user) => {
@@ -64,17 +44,18 @@ export const createUser = (user) => {
     return (dispatch, getState) => {
       const { users } = getState().user
       //verify user session already exists
-      let userExists = users.find(_user => _user.email === user.email)
+      const userExists = users.find(_user => _user.email === user.email)
 
       if(userExists) {
         dispatch(userCreationFailed('User \'' + user.email + '\' already registered'))
-        return user
       }
 
-      users.push(user)
+      const newUser = Object.assign({}, user)
+
+      users.push(newUser)
 
       dispatch(userCreated({currentUser: user, users})) // local
-      return user
+
     }
   }
 }

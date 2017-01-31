@@ -24,11 +24,19 @@ class ProductsContainer extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      active: false
+      active: false,
+      userProducts: []
     }
   }
 
   componentWillMount = () => this.props.loadProducts()
+
+  componentWillReceiveProps = (nextProps) => {
+    const currentUserProducts = nextProps.products.filter(_product => _product.sessionId === this.props.currentSession.id)
+    this.setState({
+      userProducts: currentUserProducts
+    })
+  }
 
   goToDetail = (product) => {
     this.props.navigateTo('productDetailContainer', 'productsContainer', product)
@@ -39,7 +47,7 @@ class ProductsContainer extends Component {
   }
 
   newProduct = () => {
-    this.props.navigateTo('newProductContainer', 'productsContainer')
+    this.props.navigateTo('newProductContainer', 'productsContainer', {new: +new Date()})
   }
 
   render() {
@@ -55,6 +63,7 @@ class ProductsContainer extends Component {
           <Content>
             <ProductList
               products={this.props.products}
+              currentSession={this.props.currentSession}
               goToDetail={this.goToDetail}/>
           </Content>
           <Fab
@@ -79,7 +88,8 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = state => ({
    products: state.products.productList,
-   navigation: state.navigation
+   navigation: state.navigation,
+   currentSession: state.session.currentSession
  })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductsContainer);
