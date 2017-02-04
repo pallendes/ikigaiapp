@@ -5,14 +5,13 @@ const initialState = {
 }
 
 export const showProductDetail = (state = initialState, action) => {
-  switch(action.type) {
-      case SHOW_PRODUCT_DETAIL:
-        return {
-          ...state,
-          product: action.payload,
-        }
-        break;
-      default:
-        return state;
+  switch (action.type) {
+    case SHOW_PRODUCT_DETAIL:
+      return {
+        ...state,
+        product: action.payload
+      }
+    default:
+      return state
   }
 }

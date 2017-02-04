@@ -1,21 +1,23 @@
-export default ProductModel = {
+const ProductModel = {
   id: 0,
-  name: 'The product name',
+  name: '',
   pictures: [],
   description: '',
-  price: '1234',
-  CBM: '3124',
-  UXB: '1233',
-  MOQ: '1233',
+  price: '0',
+  CBM: '0',
+  UXB: '0',
+  MOQ: '0',
   factory: {},
   category: {},
   sessionId: ''
 }
 
+export default ProductModel
+
 export const ProductModelValidation = {
   name: {},
   price: {},
-  CMB: {},
+  CBM: {},
   UXB: {},
   MOQ: {}
 }

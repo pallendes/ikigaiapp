@@ -13,7 +13,7 @@ const style = StyleSheet.create({
   sidebar: {
     flex: 1,
     paddingRight: 10,
-    backgroundColor: '#fff',
+    backgroundColor: '#fff'
   },
   sidebarHeader: {
     alignItems: 'center',
@@ -39,10 +39,10 @@ class DrawerSideBar extends Component {
     this.props.navigateTo('loginContainer', 'loginContainer')
   }
 
-  render() {
-
-    let pictureUri = this.props.user.currentUser !== null && this.props.user.currentUser.pictureUri !== '' ?
-      {uri: this.props.user.currentUser.pictureUri} : require('../Images/Photo-not-available.png')
+  render () {
+    let pictureUri = this.props.user.currentUser !== null && this.props.user.currentUser.pictureUri !== ''
+      ? { uri: this.props.user.currentUser.pictureUri }
+      : require('../Images/Photo-not-available.png')
 
     return (
       <View>
@@ -53,19 +53,19 @@ class DrawerSideBar extends Component {
         <Content style={style.sidebar}>
           <List>
             <ListItem button iconLeft onPress={() => this.goTo('productsContainer')} >
-              <Icon name="ios-pricetags-outline" style={style.icon} />
+              <Icon name='ios-pricetags-outline' style={style.icon} />
               <Text>Products</Text>
             </ListItem>
             <ListItem button iconLeft onPress={() => this.goTo('newProductContainer')} >
-              <Icon name="ios-add-circle-outline" style={style.icon}/>
+              <Icon name='ios-add-circle-outline' style={style.icon} />
               <Text>Create product</Text>
             </ListItem>
             <ListItem button iconLeft onPress={() => this.goTo('userDetailContainer')} >
-              <Icon name="ios-person-outline" style={style.icon}/>
+              <Icon name='ios-person-outline' style={style.icon} />
               <Text>User Account</Text>
             </ListItem>
             <ListItem button iconLeft onPress={() => this.logOut()} >
-              <Icon name="ios-log-out" style={style.icon}/>
+              <Icon name='ios-log-out' style={style.icon} />
               <Text>Logout</Text>
             </ListItem>
           </List>
@@ -75,13 +75,13 @@ class DrawerSideBar extends Component {
   }
 }
 
-mapStateToProps = (state) => ({
+const mapStateToProps = (state) => ({
   auth: state.auth,
   navigation: state.navigation,
   user: state.user
 })
 
-mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = (dispatch) => ({
   navigateTo: (route, homeRoute) => dispatch(navigateTo(route, homeRoute)),
   logOut: () => dispatch(logOut())
 })

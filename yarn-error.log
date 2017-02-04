@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add react-native-filesystem
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add global standard-format
 
 PATH: 
   C:\Python27\;C:\Python27\Scripts;C:\Program Files\Docker\Docker\Resources\bin;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files (x86)\MySQL\MySQL Fabric 1.5 & MySQL Utilities 1.5\;C:\Program Files (x86)\MySQL\MySQL Fabric 1.5 & MySQL Utilities 1.5\Doctrine extensions for PHP\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\Git\cmd;C:\Program Files\Git\bin;C:\ProgramData\chocolatey\bin;C:\Program Files\Java\jdk1.8.0_112\bin;C:\Program Files (x86)\Brackets\command;C:\Program Files (x86)\Skype\Phone\;C:\Program Files\nodejs\;C:\Program Files (x86)\Yarn\bin;C:\RailsInstaller\Git\cmd;C:\RailsInstaller\Ruby2.2.0\bin;C:\Users\palle\AppData\Local\Android\android-sdk\tools;C:\Users\palle\AppData\Local\Android\android-sdk\platform-tools;C:\Users\palle\AppData\Roaming\npm;C:\Users\palle\AppData\Local\Yarn\.bin;C:\Users\palle\AppData\Local\atom\bin;%USERPROFILE%\AppData\Local\Microsoft\WindowsApps;
@@ -28,10 +28,11 @@ npm manifest:
       "native-base": "^0.5.20",
       "react": "15.4.1",
       "react-native": "0.39.2",
-      "react-native-camera": "0.4",
       "react-native-drawer": "^2.3.0",
+      "react-native-file-provider": "^1.0.2",
       "react-native-filesystem": "^0.1.0",
       "react-native-image-crop-picker": "^0.11.2",
+      "react-native-mail": "https://github.com/ujwal-setlur/react-native-mail.git",
       "react-native-modalbox": "^1.3.8",
       "react-native-navigation-redux-helpers": "^0.5.0",
       "react-native-simple-modal": "^4.0.2",
@@ -3142,10 +3143,6 @@ Lockfile:
     version "1.0.1"
     resolved "https://registry.yarnpkg.com/react-deep-force-update/-/react-deep-force-update-1.0.1.tgz#f911b5be1d2a6fe387507dd6e9a767aa2924b4c7"
   
-  react-native-camera@0.4:
-    version "0.4.1"
-    resolved "https://registry.yarnpkg.com/react-native-camera/-/react-native-camera-0.4.1.tgz#b8d24bd2e0b7f9d93fd4f2b7e6ef15fdeb886391"
-  
   react-native-checkbox@~1.0.8:
     version "1.0.17"
     resolved "https://registry.yarnpkg.com/react-native-checkbox/-/react-native-checkbox-1.0.17.tgz#94c61f190ef728c38763f48cd7ab91a6ad9fd4e2"
@@ -3162,6 +3159,10 @@ Lockfile:
     dependencies:
       lodash "^4.11.1"
   
+  react-native-file-provider@^1.0.2:
+    version "1.0.2"
+    resolved "https://registry.yarnpkg.com/react-native-file-provider/-/react-native-file-provider-1.0.2.tgz#334f17a766858773a72fa91b8e012c96367b050c"
+  
   react-native-filesystem@^0.1.0:
     version "0.1.0"
     resolved "https://registry.yarnpkg.com/react-native-filesystem/-/react-native-filesystem-0.1.0.tgz#b66eebbfa046ac12cb5d2503eda78641fca58c23"
@@ -3175,6 +3176,10 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/react-native-keyboard-aware-scroll-view/-/react-native-keyboard-aware-scroll-view-0.2.0.tgz#d9a94b358cbf92693750b16b4364d64d70060f20"
     dependencies:
       react-timer-mixin "^0.13.3"
+  
+  "react-native-mail@https://github.com/ujwal-setlur/react-native-mail.git":
+    version "3.0.1"
+    resolved "https://github.com/ujwal-setlur/react-native-mail.git#8d07b941190a0373a1eaf6c0723d8e6f4f3cffbd"
   
   react-native-modalbox@^1.3.8:
     version "1.3.8"

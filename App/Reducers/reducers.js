@@ -11,14 +11,14 @@ import { factoryReducer } from './FactoryReducer'
 import { sessionReducer } from './SessionReducer'
 
 export default combineReducers({
-        products: showProducts,
-        navigation: cardNavigation,
-        drawer: toggleDrawer,
-        product: showProductDetail,
-        camera: cameraReducer,
-        auth: authReducer,
-        user: userReducer,
-        categories: categoryReducer,
-        factories: factoryReducer,
-        session: sessionReducer,
-    })
+  products: showProducts,
+  navigation: cardNavigation,
+  drawer: toggleDrawer,
+  product: showProductDetail,
+  camera: cameraReducer,
+  auth: authReducer,
+  user: userReducer,
+  categories: categoryReducer,
+  factories: factoryReducer,
+  session: sessionReducer
+})

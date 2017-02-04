@@ -9,15 +9,13 @@ export const toggleDrawer = (state = initialState, action) => {
     case OPEN_DRAWER:
       return {
         ...state,
-        drawerState: 'opened',
+        drawerState: 'opened'
       }
-      break;
     case CLOSE_DRAWER:
       return {
         ...state,
-        drawerState: 'closed',
+        drawerState: 'closed'
       }
-      break;
     default:
       return state
   }

@@ -1,10 +1,10 @@
 import ValidateModel from 'validate-model'
 
 export default UserModel = {
-  email: 'allendes91@gmail.com',
-  name: 'asdasdasd',
-  lastName: 'asdasdasd',
-  passwd: '12345678',
+  email: '',
+  name: '',
+  lastName: '',
+  passwd: '',
   pictureUri: ''
 }
 

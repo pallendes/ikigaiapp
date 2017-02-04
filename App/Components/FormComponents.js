@@ -11,7 +11,7 @@ import customTheme from '../Theme/custom'
 
 const style = StyleSheet.create({
   errorIcon: {
-    color:'red'
+    color: 'red'
   },
   inputIcon: {
     color: '#0A69FE'
@@ -33,6 +33,14 @@ const style = StyleSheet.create({
     fontSize: 12,
     color: 'red',
     textAlign: 'right'
+  },
+  iconRight: {
+    position: 'absolute',
+    left: 0,
+    paddingLeft: 5
+  },
+  inputIconRight: {
+    paddingLeft: 22
   }
 })
 
@@ -48,7 +56,7 @@ export class FormInput extends Component {
     inlineLabel: PropTypes.string
   }
 
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       touched: false
@@ -60,13 +68,12 @@ export class FormInput extends Component {
       'Error',
       message,
       [
-        {text: 'OK', onPress: () => console.log('OK Pressed')},
+        {text: 'OK', onPress: () => console.log('OK Pressed')}
       ]
     )
   }
 
-  render() {
-
+  render () {
     let validationError = null
     let successIcon = null
     let iconRight = this.props.iconPosition === 'right'
@@ -74,7 +81,7 @@ export class FormInput extends Component {
     let valid = false
     let isDefinedDefaultIcon = this.props.icon !== undefined
 
-    if(this.props.validationMessage) {
+    if (this.props.validationMessage) {
       validationError = this.props.validationMessage.length > 0 ? this.props.validationMessage[0] : this.props.validationMessage
     }
 
@@ -84,12 +91,12 @@ export class FormInput extends Component {
       successIcon = 'ios-checkmark-circle-outline'
     }
 
-    //if this.props.valid is not specified the model will not be validated
+    // if this.props.valid is not specified the model will not be validated
     valid = this.props.valid === undefined ? true : this.props.valid
 
-    displayedIcon = valid ?
-      (successIcon !== undefined ? <Icon name={successIcon} style={this.state.touched ? style.successIcon : style.inputIcon } /> : null )
-      : <Button transparent onPress={() => this.showErrorDialog(validationError)}><Icon name={'ios-close-circle-outline'} style={style.errorIcon} /></Button>
+    displayedIcon = valid
+      ? (successIcon !== undefined ? <Icon name={successIcon} style={this.state.touched ? style.successIcon : style.inputIcon} /> : null)
+      : <Button transparent style={!iconRight ? style.iconRight : null} onPress={() => this.showErrorDialog(validationError)}><Icon name={'ios-close-circle-outline'} style={style.errorIcon} /></Button>
 
     return (
       <View theme={customTheme}>
@@ -104,12 +111,13 @@ export class FormInput extends Component {
             value={this.props.value}
             multiline={this.props.multiline !== undefined}
             secureTextEntry={this.props.secureTextEntry !== undefined}
-            style={style.input}
+            style={[style.input, (!iconRight && !valid) ? style.inputIconRight : null]}
+            keyboardType={this.props.keyboardType === undefined ? 'default' : this.props.keyboardType}
             onChangeText={(text) => {
-              this.props.onChangeText({text}.text, this.props.modelField);
+              this.props.onChangeText({text}.text, this.props.modelField)
               this.setState({touched: true})
-              }
-            }/>
+            }
+            } />
         </InputGroup>
         { this.props.hideError !== undefined ? null : <Text note style={style.errorText}>{validationError}</Text> }
       </View>

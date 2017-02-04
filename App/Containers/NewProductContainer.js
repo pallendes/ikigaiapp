@@ -3,8 +3,8 @@ import NewProduct from '../Components/NewProduct'
 import { connect } from 'react-redux'
 import navigateTo from '../Actions/SideBarNav'
 import { launchCamera, pictureTaken, closeCamera } from '../Actions/CameraActions'
+import { openDrawer } from '../Actions/DrawerActions'
 import ImagePicker from 'react-native-image-crop-picker'
-import { List, ListItem, Text } from 'native-base'
 import { getCategories } from '../Actions/CategoryActions'
 import ProductModel, { ProductModelValidation, ProductValidators } from '../Models/ProductModel'
 import { getFactories } from '../Actions/FactoryActions'
@@ -14,18 +14,18 @@ import { validate, validateAll } from '../Models/ValidateModel'
 
 class NewProductContainer extends Component {
 
-  constructor(props) {
+  constructor (props) {
     super(props)
 
     let _productModel = null
     let isNewProduct = true
 
-    if(props.selectedProduct) {
+    if (props.selectedProduct) {
       _productModel = Object.assign({}, props.selectedProduct)
-      _productModel.pictures = props.selectedProduct.pictures.slice() //array copy
+      _productModel.pictures = props.selectedProduct.pictures.slice() // array copy
       isNewProduct = false
     } else {
-      //temporal fix
+      // temporal fix
       _productModel = Object.assign({}, ProductModel)
       _productModel.pictures = []
     }
@@ -44,11 +44,15 @@ class NewProductContainer extends Component {
   }
 
   setNativeProps = (nativeProps) => {
-    this._root.setNativeProps(nativeProps);
+    this._root.setNativeProps(nativeProps)
   }
 
   goBack = () => {
     this.props.navigateTo('productsContainer', 'productsContainer')
+  }
+
+  editImages = (product) => {
+    this.props.navigateTo('productImagesContainer', 'productsContainer', {product: product})
   }
 
   handleNewPicture = (from) => {
@@ -63,7 +67,9 @@ class NewProductContainer extends Component {
         this.setState({
           product: product
         })
-      });
+      }, (err) => {
+        console.error(err)
+      })
     } else {
       ImagePicker.openPicker({})
         .then(image => {
@@ -72,16 +78,18 @@ class NewProductContainer extends Component {
           this.setState({
             product: product
           })
-        });
+        }, (err) => {
+          console.error(err)
+        })
     }
   }
 
   setProductProps = (value, prop) => {
-
     let { product, productValidation } = this.state
 
-    if(ProductValidators[prop])
+    if (ProductValidators[prop]) {
       productValidation[prop] = validate(ProductValidators[prop], value)
+    }
 
     product[prop] = value
 
@@ -89,15 +97,13 @@ class NewProductContainer extends Component {
       product: product,
       productValidation: productValidation
     })
-
   }
 
   saveProduct = async () => {
-
     let prevLength = this.props.products.length
     let product = this.copyProduct()
 
-    if(!validateAll(ProductValidators, product).valid) {
+    if (!validateAll(ProductValidators, product).valid) {
       ToastAndroid.show('You have to complete the form correctly before save!', ToastAndroid.SHORT)
       return
     }
@@ -105,13 +111,13 @@ class NewProductContainer extends Component {
     product.id = prevLength > 0 ? this.props.products[this.props.products.length - 1].id + 1 : 0
     product.sessionId = this.props.session.currentSession.id
 
-    //temporal fix
+    // temporal fix
     if (!product.factory.id) {
       product.factory = Object.assign({}, this.props.factories[0])
     }
 
-    //temporal fix
-    if(!product.category.id) {
+    // temporal fix
+    if (!product.category.id) {
       product.category = Object.assign({}, this.props.categories[0])
     }
 
@@ -119,16 +125,14 @@ class NewProductContainer extends Component {
 
     await this.props.persistProduct(products)
 
-    //@TODO mejorar esto
-    if(this.props.products.length > prevLength) {
+    // @TODO mejorar esto
+    if (this.props.products.length > prevLength) {
       this.props.navigateTo('productsContainer', 'productsContainer')
       ToastAndroid.show('Your peoduct was created succesfully!', ToastAndroid.SHORT)
     }
-
   }
 
   saveChanges = () => {
-
     const product = this.copyProduct()
     const productIndex = this.props.products.findIndex(_product => _product.id === product.id)
 
@@ -142,7 +146,6 @@ class NewProductContainer extends Component {
 
     this.props.navigateTo('productsContainer', 'productsContainer')
     ToastAndroid.show('Your peoduct was modified succesfully!', ToastAndroid.SHORT)
-
   }
 
   copyProduct = () => {
@@ -169,7 +172,7 @@ class NewProductContainer extends Component {
     this.props.openDrawer()
   }
 
-  render() {
+  render () {
     return (
       <NewProduct
         goBack={this.goBack}
@@ -182,7 +185,7 @@ class NewProductContainer extends Component {
         setProductProps={this.setProductProps}
         product={this.state.product}
         openDrawer={this.openDrawer}
-        product={this.state.product}
+        editImages={this.editImages}
         isNewProduct={this.state.isNewProduct}
         saveChanges={this.saveChanges}
         productValidation={this.state.productValidation}
@@ -191,7 +194,7 @@ class NewProductContainer extends Component {
   }
 }
 
-mapStateToProps = state => ({
+const mapStateToProps = state => ({
   cameraState: state.camera.cameraState,
   pictureUri: state.camera.pictureUri,
   categories: state.categories.categories,
@@ -200,8 +203,8 @@ mapStateToProps = state => ({
   session: state.session
 })
 
-mapDispatchToProps = (dispatch) => ({
-  navigateTo: (route, homeRoute) => dispatch(navigateTo(route, homeRoute)),
+const mapDispatchToProps = (dispatch) => ({
+  navigateTo: (route, homeRoute, passProps) => dispatch(navigateTo(route, homeRoute, passProps)),
   launchCamera: () => dispatch(launchCamera()),
   pictureTaken: (pictureUri) => dispatch(pictureTaken(pictureUri)),
   closeCamera: () => dispatch(closeCamera()),

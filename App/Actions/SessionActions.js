@@ -9,10 +9,10 @@ export const createSession = (user) => (dispatch, getState) => {
   dispatch(initSessionCreation())
 
   const { sessions } = getState().session
-  //verify if user session already exists
+  // verify if user session already exists
   const userSession = sessions.find(_session => _session.userId === user.email)
 
-  if(userSession) {
+  if (userSession) {
     dispatch(sessionCreationFailed('A session already exists for the user ' + user.email))
   }
 
@@ -25,7 +25,6 @@ export const createSession = (user) => (dispatch, getState) => {
   sessions.push(newSession)
 
   dispatch(sessionCreated({currentSession: newSession, sessions}))
-
 }
 
 export const registerCurrentSession = (currentSession) => {

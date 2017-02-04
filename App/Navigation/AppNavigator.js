@@ -3,8 +3,8 @@ import React, { Component } from 'react'
 import { closeDrawer } from '../Actions/DrawerActions'
 import { connect } from 'react-redux'
 import DrawerSideBar from '../Components/DrawerSideBar'
-import { actions } from 'react-native-navigation-redux-helpers';
-import { BackAndroid, StatusBar, NavigationExperimental } from 'react-native';
+import { actions } from 'react-native-navigation-redux-helpers'
+import { BackAndroid, NavigationExperimental } from 'react-native'
 
 import ProductsContainer from '../Containers/ProductsContainer'
 import ProductDetailContainer from '../Containers/ProductDetailContainer'
@@ -12,12 +12,13 @@ import UserContainer from '../Containers/UserContainer'
 import NewProductContainer from '../Containers/NewProductContainer'
 import LoginContainer from '../Containers/LoginContainer'
 import UserDetailContainer from '../Containers/UserDetailContainer'
+import ProductImagesContainer from '../Containers/ProductImagesContainer'
 
-const { popRoute, pushRoute, } = actions;
+const { popRoute } = actions
 
 const {
   CardStack: NavigationCardStack
-} = NavigationExperimental;
+} = NavigationExperimental
 
 class AppNavigator extends Component {
 
@@ -27,8 +28,8 @@ class AppNavigator extends Component {
     closeDrawer: React.PropTypes.func,
     navigation: React.PropTypes.shape({
       key: React.PropTypes.string,
-      routes: React.PropTypes.array,
-    }),
+      routes: React.PropTypes.array
+    })
   }
 
   componentDidMount = () => {
@@ -39,13 +40,12 @@ class AppNavigator extends Component {
         return false
       }
 
-      this.props.popRoute(this.props.navigation.key);
+      this.props.popRoute(this.props.navigation.key)
       return true
-    });
+    })
   }
 
   componentDidUpdate = () => {
-
     if (this.props.drawerState === 'opened') {
       this.openDrawer()
     }
@@ -74,25 +74,27 @@ class AppNavigator extends Component {
       case 'loginContainer':
         return <LoginContainer />
       case 'productsContainer':
-        return <ProductsContainer />;
+        return <ProductsContainer />
       case 'productDetailContainer':
-        return <ProductDetailContainer {...props.scene.route.passProps}/>;
+        return <ProductDetailContainer {...props.scene.route.passProps} />
       case 'userRegistry':
         return <UserContainer />
       case 'userDetailContainer':
         return <UserDetailContainer />
       case 'newProductContainer':
-        return <NewProductContainer {...props.scene.route.passProps}/>
+        return <NewProductContainer {...props.scene.route.passProps} />
+      case 'productImagesContainer':
+        return <ProductImagesContainer {...props.scene.route.passProps} />
       default :
-        return <LoginContainer />;
+        return <LoginContainer />
     }
   }
 
-  render() {
+  render () {
     return (
       <Drawer
-        ref={(ref) => { this._drawer = ref; }}
-        type="overlay"
+        ref={(ref) => { this._drawer = ref }}
+        type='overlay'
         tweenDuration={150}
         content={<DrawerSideBar />}
         tapToClose
@@ -104,16 +106,16 @@ class AppNavigator extends Component {
           drawer: {
             shadowColor: '#000000',
             shadowOpacity: 0.8,
-            shadowRadius: 3,
-          },
+            shadowRadius: 3
+          }
         }}
         tweenHandler={(ratio) => {
           return {
             drawer: { shadowRadius: ratio < 0.2 ? ratio * 5 * 5 : 5 },
             main: {
-              opacity: (2 - ratio) / 2,
-            },
-          };
+              opacity: (2 - ratio) / 2
+            }
+          }
         }}
         negotiatePan
         >
@@ -127,19 +129,14 @@ class AppNavigator extends Component {
   }
 }
 
-const drawerStyles = {
-  drawer: { shadowColor: '#000000', shadowOpacity: 0.8, shadowRadius: 3},
-  main: {paddingLeft: 3},
-}
-
 const mapDispatchToProps = (dispatch) => ({
-    closeDrawer: () => dispatch(closeDrawer()),
-    popRoute: key => dispatch(popRoute(key))
+  closeDrawer: () => dispatch(closeDrawer()),
+  popRoute: key => dispatch(popRoute(key))
 })
 
 const mapStateToProps = state => ({
   drawerState: state.drawer.drawerState,
-  navigation: state.navigation,
-});
+  navigation: state.navigation
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(AppNavigator)

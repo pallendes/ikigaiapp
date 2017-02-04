@@ -9,7 +9,7 @@ class UserDetailContainer extends Component {
     this.props.navigateTo('productsContainer', 'productsContainer')
   }
 
-  render() {
+  render () {
     return (
       <UserDetail
         user={this.props.userReducer.currentUser}
@@ -26,7 +26,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  navigateTo: (route, homeRoute) => dispatch(navigateTo(route, homeRoute)),
+  navigateTo: (route, homeRoute) => dispatch(navigateTo(route, homeRoute))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserDetailContainer)

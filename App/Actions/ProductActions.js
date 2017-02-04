@@ -1,14 +1,10 @@
-//dummy data
-import { PRODUCTS } from '../Services/MockProducts';
-
 export const SHOW_PRODUCTS = 'SHOW_PRODUCTS'
 export const PERSIST_PRODUCT = 'PERSIST_PRODUCT'
 export const DELETE_PRODUCT = 'DELETE_PRODUCT'
 export const BEGIN_LOADING = 'BEGIN_LOADING'
 
-//@TODO add firebase support
+// @TODO add firebase support
 export const loadProducts = () => (dispatch, getState) => {
-
   // dispatch(beginLoading())
   //
   // const { currentUser } = getState().user
@@ -19,7 +15,6 @@ export const loadProducts = () => (dispatch, getState) => {
   // let products = productList.filter(_product => _product.sessionId === currentSession.id)
 
   dispatch(showProducts(getState().products.productList))
-
 }
 
 export const beginLoading = () => {
@@ -28,23 +23,23 @@ export const beginLoading = () => {
   }
 }
 
-export function showProducts(products = []) {
+export function showProducts (products = []) {
   return {
     type: SHOW_PRODUCTS,
     payload: products
   }
 }
 
-//@TODO add firebase support verify a better way to do this
-export function deleteProduct(productList) {
+// @TODO add firebase support verify a better way to do this
+export function deleteProduct (productList) {
   return {
     type: DELETE_PRODUCT,
     payload: productList
   }
 }
 
-//@TODO add firebase support
-export function persistProduct(productList) {
+// @TODO add firebase support
+export function persistProduct (productList) {
   return {
     type: PERSIST_PRODUCT,
     payload: productList

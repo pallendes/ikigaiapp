@@ -1,5 +1,4 @@
-import { firebaseAuth, firebaseDb, firebaseStorage, firebaseEnabled } from '../Config/firebase'
-import { createSession } from './SessionActions'
+import { firebaseAuth, firebaseDb, firebaseEnabled } from '../Config/firebase'
 
 export const INIT_USER_CREATION = 'INIT_USER_CREATION'
 export const USER_CREATED = 'USER_CREATED'
@@ -39,14 +38,14 @@ export const registerLoggedUser = (user) => {
 
 export const createUser = (user) => {
   if (firebaseEnabled) {
-    return persistToFirebase(user);
+    return persistToFirebase(user)
   } else {
     return (dispatch, getState) => {
       const { users } = getState().user
-      //verify user session already exists
+      // verify user session already exists
       const userExists = users.find(_user => _user.email === user.email)
 
-      if(userExists) {
+      if (userExists) {
         dispatch(userCreationFailed('User \'' + user.email + '\' already registered'))
       }
 
@@ -55,14 +54,13 @@ export const createUser = (user) => {
       users.push(newUser)
 
       dispatch(userCreated({currentUser: user, users})) // local
-
     }
   }
 }
 
-//@TODO add firebase support
+// @TODO add firebase support
 export const deleteUser = (user) => {
-  if(firebaseEnabled) {
+  if (firebaseEnabled) {
     return {
       type: DELETE_USER
     }
@@ -76,7 +74,7 @@ export const persistUser = (user) => {
       payload: user
     }
   } else {
-    return updateUserToFirebase(user);
+    return updateUserToFirebase(user)
   }
 }
 
@@ -101,7 +99,7 @@ export const updateUserToFirebase = (user) => {
       name: user.name,
       lastName: user.lastName
     })
-    .then(() => dispatch(userCreated(result)))
+    .then((result) => dispatch(userCreated(result)))
     .catch(error => dispatch(userCreationFailed(error)))
   }
 }
@@ -120,8 +118,8 @@ export const persistToFirebase = (user) => {
       })
       .then(() => {
         dispatch(userCreated(user))
-        //@TODO
-        //persist profile pic to firebase storage
+        // @TODO
+        // persist profile pic to firebase storage
         // let storageRef = firebaseStorage.ref().child('users/' + firebaseAuth.currentUser.uid)
       })
       .then(result => dispatch(userCreated(user)))

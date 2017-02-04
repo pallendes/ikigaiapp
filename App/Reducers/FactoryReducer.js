@@ -4,7 +4,7 @@ const initialState = {
   factories: []
 }
 
-export function factoryReducer(state = initialState, action) {
+export function factoryReducer (state = initialState, action) {
   switch (action.type) {
     case GET_FACTORIES:
       return {

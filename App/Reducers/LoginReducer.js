@@ -3,14 +3,16 @@ import { INIT_AUTH,
   LOGIN_ERROR,
   INIT_LOGOUT,
   LOGOUT_ERROR,
-  LOGOUT_SUCCESS
+  LOGOUT_SUCCESS,
+  REHYDRATATION_COMPLETE
 } from '../Actions/LoginActions'
 
 const initialState = {
   authenticated: false,
   user: null,
   errorMessage: null,
-  isProcessing: false
+  isProcessing: false,
+  rehydratated: false
 }
 
 export function authReducer (state = initialState, action) {
@@ -18,7 +20,7 @@ export function authReducer (state = initialState, action) {
     case INIT_AUTH:
       return {
         ...state,
-        isProcessing: true,
+        isProcessing: true
       }
     case LOGIN_SUCCESS:
       return {
@@ -26,33 +28,40 @@ export function authReducer (state = initialState, action) {
         authenticated: true,
         user: action.payload,
         errorMessage: null,
-        isProcessing: false,
+        isProcessing: false
       }
     case LOGIN_ERROR:
       return {
         ...state,
         authenticated: false,
         errorMessage: action.payload,
-        isProcessing: false,
+        isProcessing: false
       }
     case INIT_LOGOUT:
       return {
         ...state,
-        isProcessing: true,
+        isProcessing: true
       }
     case LOGOUT_SUCCESS: {
       return {
         ...state,
         isProcessing: false,
-        authenticated: false,
+        authenticated: false
       }
     }
     case LOGOUT_ERROR:
       return {
         ...state,
         isProcessing: false,
-        errorMessage: action.payload,
+        authenticated: false,
+        errorMessage: action.payload
       }
+    case REHYDRATATION_COMPLETE: {
+      return {
+        ...state,
+        rehydratated: true
+      }
+    }
     default:
       return state
   }

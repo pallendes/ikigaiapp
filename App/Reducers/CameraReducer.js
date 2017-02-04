@@ -10,21 +10,18 @@ export const cameraReducer = (state = initialState, action) => {
     case LAUNCH_CAMERA:
       return {
         ...state,
-        cameraState: 'opened',
+        cameraState: 'opened'
       }
-      break;
     case CLOSE_CAMERA:
       return {
         ...state,
-        cameraState: 'closed',
+        cameraState: 'closed'
       }
-      break;
     case PICTURE_TAKEN:
       return {
         ...state,
-        pictureUri: action.payload,
+        pictureUri: action.payload
       }
-      break
     default:
       return state
   }

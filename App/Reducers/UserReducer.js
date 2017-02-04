@@ -6,6 +6,7 @@ import { INIT_USER_CREATION,
   LOGOUT_CURRENT_USER,
   DELETE_USER,
   REGISTER_LOGGED_USER } from '../Actions/UserActions'
+import userModel from '../Models/UserModel'
 
 const initialState = {
   isProcessing: false,
@@ -15,12 +16,11 @@ const initialState = {
 }
 
 export function userReducer (state = initialState, action) {
-
   switch (action.type) {
     case INIT_USER_CREATION:
       return {
         ...state,
-        isProcessing: true,
+        isProcessing: true
       }
     case USER_CREATED:
       return {
@@ -33,17 +33,17 @@ export function userReducer (state = initialState, action) {
       return {
         ...state,
         isProcessing: false,
-        error: action.error,
+        error: action.error
       }
     case DELETE_USER:
       return {
         ...state,
-        user: userModel
+        user: Object.assign({}, userModel)
       }
     case MODIFY_USER_DATA:
       return {
         ...state,
-        user: action.payload,
+        user: action.payload
       }
     case PERSIST_USER:
       return {

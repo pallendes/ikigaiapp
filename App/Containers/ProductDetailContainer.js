@@ -8,7 +8,7 @@ import { Alert, ToastAndroid } from 'react-native'
 
 class ProductDetailContainer extends Component {
 
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       fabActive: false
@@ -35,23 +35,21 @@ class ProductDetailContainer extends Component {
   }
 
   deleteProduct = (product) => {
-
     let productIndex = this.props.products.findIndex(_product => _product.id === product.id)
     let prevLength = this.props.products.length
 
-    if (productIndex > -1){
+    if (productIndex > -1) {
       const products = [...this.props.products.slice(0, productIndex),
         ...this.props.products.slice(productIndex + 1)]
       this.props.deleteProduct(products)
     }
 
-    if(prevLength > this.props.products.length) {
+    if (prevLength > this.props.products.length) {
       ToastAndroid.show('Product deleted succesfully!', ToastAndroid.SHORT)
       this.goBack()
     } else {
       ToastAndroid.show('Error ocurred while trying to delete product', ToastAndroid.SHORT)
     }
-
   }
 
   goBack = () => {
@@ -64,8 +62,7 @@ class ProductDetailContainer extends Component {
     })
   }
 
-  render() {
-
+  render () {
     const product = { product: this.props.selectedProduct }
 
     return (
@@ -75,19 +72,19 @@ class ProductDetailContainer extends Component {
         showFab={this.showFab}
         editProduct={this.editProduct}
         confirmDeleteProduct={this.confirmDeleteProduct}
-        {...product}/>
+        {...product} />
     )
   }
 }
 
-mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = (dispatch) => ({
   navigateTo: (route, homeRoute, passProps) => dispatch(navigateTo(route, homeRoute, passProps)),
   deleteProduct: (products) => dispatch(deleteProduct(products)),
-  showProductDetail,
+  showProductDetail
 })
 
-mapStateToProps = state => ({
-   products: state.products.productList
+const mapStateToProps = state => ({
+  products: state.products.productList
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductDetailContainer)

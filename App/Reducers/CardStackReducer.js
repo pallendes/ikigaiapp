@@ -1,4 +1,4 @@
-import { cardStackReducer } from 'react-native-navigation-redux-helpers';
+import { cardStackReducer } from 'react-native-navigation-redux-helpers'
 
 const initialState = {
   key: 'global',
@@ -8,8 +8,8 @@ const initialState = {
       key: 'loginContainer',
       index: 0,
       passProps: {}
-    },
-  ],
-};
+    }
+  ]
+}
 
-module.exports = cardStackReducer(initialState);
+module.exports = cardStackReducer(initialState)

@@ -1,17 +1,10 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
 import { Container,
   Content,
-  List,
-  ListItem,
-  InputGroup,
-  Input,
   Icon,
-  Text,
   Button,
-  Thumbnail,
   Header,
   Grid,
-  Col,
   View,
   Row,
   Title } from 'native-base'
@@ -44,7 +37,7 @@ const style = StyleSheet.create({
     marginBottom: 20
   },
   errorIcon: {
-    color:'red'
+    color: 'red'
   },
   inputIcon: {
     color: '#0A69FE'
@@ -60,7 +53,6 @@ const style = StyleSheet.create({
 })
 
 const UserRegistry = ({goBack, handleNewPicture, openModal, closeModal, createUser, setUserProp, ...props}) => {
-
   let pictureUri = props.user.pictureUri === ''
     ? require('../Images/Photo-not-available.png') : {uri: props.user.pictureUri}
 
@@ -71,9 +63,9 @@ const UserRegistry = ({goBack, handleNewPicture, openModal, closeModal, createUs
           <Icon name='ios-arrow-back' />
         </Button>
         <Title>Sing Up</Title>
-        <Button transparent>
+        {/* <Button transparent>
           <Icon name='ios-menu' />
-        </Button>
+        </Button> */}
       </Header>
       <View>
         <Content>
@@ -83,7 +75,7 @@ const UserRegistry = ({goBack, handleNewPicture, openModal, closeModal, createUs
                 <TouchableHighlight onPress={() => openModal()}>
                   <Image
                     style={style.image}
-                    source={pictureUri}/>
+                    source={pictureUri} />
                 </TouchableHighlight>
               </View>
             </Row>
@@ -96,7 +88,7 @@ const UserRegistry = ({goBack, handleNewPicture, openModal, closeModal, createUs
                 placeholder='Enter your name...'
                 iconPosition='right'
                 value={props.user.name}
-                onChangeText={setUserProp}/>
+                onChangeText={setUserProp} />
             </Row>
             <Row>
               <FormInput
@@ -105,7 +97,7 @@ const UserRegistry = ({goBack, handleNewPicture, openModal, closeModal, createUs
                 placeholder='Enter your last name...'
                 iconPosition='right'
                 value={props.user.lastName}
-                onChangeText={setUserProp}/>
+                onChangeText={setUserProp} />
             </Row>
             <Row>
               <View>
@@ -114,10 +106,11 @@ const UserRegistry = ({goBack, handleNewPicture, openModal, closeModal, createUs
                   valid={props.userValidation.email.valid}
                   validationMessage={props.userValidation.email.messages}
                   modelField='email'
+                  keyboardType='email-address'
                   placeholder='Email'
                   value={props.user.email}
                   icon='ios-at-outline'
-                  onChangeText={setUserProp}/>
+                  onChangeText={setUserProp} />
               </View>
             </Row>
             <Row>
@@ -130,7 +123,7 @@ const UserRegistry = ({goBack, handleNewPicture, openModal, closeModal, createUs
                 value={props.user.passwd}
                 placeholder='Password'
                 icon='ios-lock-outline'
-                onChangeText={setUserProp}/>
+                onChangeText={setUserProp} />
             </Row>
             <Row style={style.buttonRow}>
               <Button
@@ -147,7 +140,7 @@ const UserRegistry = ({goBack, handleNewPicture, openModal, closeModal, createUs
           handleNewPicture={handleNewPicture}
           closeModal={closeModal}
           modalOpen={props.modalOpen}
-          {...props}/>
+          {...props} />
         <AsyncLoader modalOpen={props.showLoader} />
       </View>
     </Container>

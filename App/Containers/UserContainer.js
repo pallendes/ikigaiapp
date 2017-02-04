@@ -10,7 +10,7 @@ import { createSession } from '../Actions/SessionActions'
 
 class UserContainer extends Component {
 
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       modalOpen: false,
@@ -24,22 +24,21 @@ class UserContainer extends Component {
   }
 
   createUser = async () => {
-
     const user = this.state.user
 
     const validModel = validateAll(UserValidators, user).valid
 
-    if(!validModel) {
+    if (!validModel) {
       ToastAndroid.show('You have to complete the form correctly before sing up!', ToastAndroid.SHORT)
       return
     }
 
-    //create user session
+    // create user session
     await this.props.createSession(user)
-    //if session exists means it was created
-    if(this.props.session.currentSession) {
+    // if session exists means it was created
+    if (this.props.session.currentSession) {
       await this.props.createUser(user)
-      if(this.props.userReducer.currentUser) {
+      if (this.props.userReducer.currentUser) {
         ToastAndroid.show('User registered successfully!', ToastAndroid.SHORT)
         this.props.navigateTo('productsContainer', 'userContainer')
       }
@@ -56,7 +55,7 @@ class UserContainer extends Component {
         height: 400
       }).then(image => {
         this.setUserProp(image.path, 'pictureUri')
-      }).catch(err => console.log(err));
+      }).catch(err => console.log(err))
     } else {
       ImagePicker.openPicker({})
         .then(image => {
@@ -75,12 +74,11 @@ class UserContainer extends Component {
   }
 
   setUserProp = (value, prop) => {
-
     const {user, userValidation} = this.state
 
-    if(UserValidators[prop])
+    if (UserValidators[prop]) {
       userValidation[prop] = validate(UserValidators[prop], value)
-
+    }
     user[prop] = value
 
     this.setState({
@@ -89,7 +87,7 @@ class UserContainer extends Component {
     })
   }
 
-  render() {
+  render () {
     return (
       <UserRegistry
         goBack={this.goBack}
@@ -101,7 +99,7 @@ class UserContainer extends Component {
         showLoader={this.props.userReducer.isProcessing}
         modalOpen={this.state.modalOpen}
         userValidation={this.state.userValidation}
-        user={this.state.user}/>
+        user={this.state.user} />
     )
   }
 }

@@ -1,6 +1,7 @@
-import { firebaseAuth, firebaseDb, firebaseEnabled } from '../Config/firebase'
+import { firebaseAuth, firebaseEnabled } from '../Config/firebase'
 import { destroyCurrentSession, registerCurrentSession } from './SessionActions'
 import { logoutCurrentUser, registerLoggedUser } from './UserActions'
+import navigateTo from './SideBarNav'
 
 export const INIT_AUTH = 'INIT_AUTH'
 export const LOGIN_ERROR = 'LOGIN_ERROR'
@@ -8,55 +9,63 @@ export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 export const INIT_LOGOUT = 'INIT_LOGOUT'
 export const LOGOUT_ERROR = 'LOGIN_ERROR'
 export const LOGOUT_SUCCESS = 'LOGIN_SUCCESS'
+export const REHYDRATATION_COMPLETE = 'REHYDRATATION_COMPLETE'
 
-export function initAuth() {
+export function initAuth () {
   return {
     type: INIT_AUTH
   }
 }
 
-export function initLogOut() {
+export function initLogOut () {
   return {
     type: INIT_LOGOUT
   }
 }
 
+export const rehydratationComplete = () => (dispatch, getState) => {
+  const { authenticated } = getState().auth
+  console.log(authenticated)
+  if (authenticated) {
+    dispatch(navigateTo('productsContainer', 'loginContainer'))
+  }
+  dispatch({type: REHYDRATATION_COMPLETE})
+}
+
 export const authenticate = (email, passwd) => (dispatch, getState) => {
-
-    if(firebaseEnabled) {
-      dispatch(initAuth())
-      return firebaseAuth.signInWithEmailAndPassword(email, passwd)
-        .then(result => {
-          dispatch(signInSuccess(result.user))
-        })
-        .catch(err => {
-          console.log('authenticate error: ', err)
-          dispatch(signInError(err.message))
-        })
+  if (firebaseEnabled) {
+    dispatch(initAuth())
+    return firebaseAuth.signInWithEmailAndPassword(email, passwd)
+      .then(result => {
+        dispatch(signInSuccess(result.user))
+      })
+      .catch(err => {
+        console.log('authenticate error: ', err)
+        dispatch(signInError(err.message))
+      })
   } else {
-
     let { users } = getState().user
     let user = users.find(_user => _user.email === email)
 
     let { sessions } = getState().session
     let currentSession = sessions.find(_session => _session.userId === email)
 
-    if(user) {
-      if(user.passwd !== passwd)
+    if (user) {
+      if (user.passwd !== passwd) {
         dispatch(signInError('Invalid password for the user ' + user.email))
-      else {
+      } else {
         dispatch(signInSuccess(user))
         dispatch(registerLoggedUser(user))
         dispatch(registerCurrentSession(currentSession))
       }
-    } else
+    } else {
       dispatch(signInError('Invalid username or password'))
-
+    }
   }
 }
 
 export const logOut = () => (dispatch, getState) => {
-  if(!firebaseEnabled) {
+  if (!firebaseEnabled) {
     localLogOut(dispatch, getState)
   } else {
     return firebaseLogOut(dispatch)
@@ -64,13 +73,8 @@ export const logOut = () => (dispatch, getState) => {
 }
 
 const localLogOut = (dispatch, getState) => {
-
-  const { currentSession } = getState().session
-  const { currentUser } = getState().user
-
   dispatch(destroyCurrentSession())
   dispatch(logoutCurrentUser())
-
 }
 
 const firebaseLogOut = dispatch => {
@@ -80,28 +84,28 @@ const firebaseLogOut = dispatch => {
     .catch(err => dispatch(logOutError(err)))
 }
 
-export function signInSuccess(user) {
+export function signInSuccess (user) {
   return {
     type: LOGIN_SUCCESS,
     payload: user
   }
 }
 
-export function signInError(err) {
+export function signInError (err) {
   return {
     type: LOGIN_ERROR,
     payload: err
   }
 }
 
-export function logOutSuccess(result) {
+export function logOutSuccess (result) {
   return {
     type: LOGOUT_SUCCESS,
     payload: result
   }
 }
 
-export function logOutError(err) {
+export function logOutError (err) {
   return {
     type: LOGOUT_ERROR,
     payload: err.message

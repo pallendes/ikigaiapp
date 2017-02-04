@@ -1,30 +1,20 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
 import { Container,
   Content,
-  List,
-  ListItem,
-  InputGroup,
-  Input,
   Icon,
   Text,
   Button,
-  Thumbnail,
   Header,
   Picker,
-  Item,
   Grid,
   Col,
   Row,
-  Fab,
   View,
   Title } from 'native-base'
-import { TouchableHighlight, TouchableOpacity, Image } from 'react-native'
+import { StyleSheet } from 'react-native'
 import ImgSwiper from './ImgSwiper'
 import PickerSelector from './PickerSelector'
-import { StyleSheet, Dimensions } from 'react-native'
-import { FormInput, InlineFormInput } from './FormComponents'
-
-var width = Dimensions.get('window').width
+import { FormInput } from './FormComponents'
 
 const style = StyleSheet.create({
   content: {
@@ -43,18 +33,37 @@ const style = StyleSheet.create({
     alignSelf: 'center'
   },
   pickerText: {
-    // color: '#222222',
-    // textAlign: 'center'
     fontSize: 12,
     fontWeight: 'bold',
     color: '#808080',
     paddingBottom: 0,
     paddingLeft: 0
+  },
+  swiperButtonDelete: {
+    backgroundColor: 'red',
+    top: 10
+  },
+  swiperButton: {
+    position: 'absolute',
+    right: 10,
+    bottom: 10,
+    borderRadius: 50,
+    width: 35,
+    height: 35
+  },
+  swiper: {
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  thumbnail: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#9DD6EB'
   }
 })
 
-const NewProduct
-  = ({goBack,
+const NewProduct = ({goBack,
     handleNewPicture,
     pictureUri,
     openModal,
@@ -64,10 +73,18 @@ const NewProduct
     saveProduct,
     openDrawer,
     saveChanges,
+    editImages,
     ...props}) => {
+  let editPicturesButton = null
 
-  let picture
-    = pictureUri === '' ? require('../Images/Photo-not-available.png') : { uri: pictureUri }
+  if (props.product.pictures.length > 0) {
+    editPicturesButton =
+      <Button
+        style={[style.swiperButton, style.swiperButtonDelete]}
+        onPress={() => editImages(props.product)}>
+        <Icon name='ios-close' />
+      </Button>
+  }
 
   return (
     <Container>
@@ -76,18 +93,19 @@ const NewProduct
           <Icon name='ios-arrow-back' />
         </Button>
         <Title>Add Product</Title>
-        <Button transparent onPress={() => goBack()}>
+        {/* <Button transparent onPress={() => goBack()}>
           <Icon name='ios-menu' />
-        </Button>
+        </Button> */}
       </Header>
       <View>
         <Content style={style.content}>
           <View style={{justifyContent: 'center', alignItems: 'center'}}>
-            <ImgSwiper defaultText={'Press the \'+\' button to add images...'} {...props.product}/>
-            <Button style={{position: 'absolute', right: 10, bottom: 10, borderRadius: 50, width: 35, height: 35}}
+            <ImgSwiper defaultText={'Press the \'+\' button to add images...'} {...props.product} />
+            <Button style={style.swiperButton}
               onPress={() => openModal()}>
-                <Icon name='ios-add'/>
+              <Icon name='ios-add' />
             </Button>
+            {editPicturesButton}
           </View>
           <Grid style={{paddingLeft: 15, paddingRight: 15}}>
             <Row>
@@ -100,7 +118,7 @@ const NewProduct
                 value={props.product.name}
                 placeholder='Product name...'
                 hideError
-                onChangeText={setProductProps}/>
+                onChangeText={setProductProps} />
             </Row>
             <Row>
               <Col style={{paddingRight: 5}}>
@@ -111,21 +129,23 @@ const NewProduct
                   modelField='price'
                   iconPosition='right'
                   value={props.product.price}
+                  keyboardType='numeric'
                   placeholder='0'
                   hideError
-                  onChangeText={setProductProps}/>
+                  onChangeText={setProductProps} />
               </Col>
               <Col style={{paddingLeft: 5}}>
                 <FormInput
-                  title='CMB'
-                  valid={props.productValidation.CMB.valid}
-                  validationMessage={props.productValidation.CMB.messages}
-                  modelField='CMB'
+                  title='CBM'
+                  valid={props.productValidation.CBM.valid}
+                  validationMessage={props.productValidation.CBM.messages}
+                  modelField='CBM'
                   iconPosition='right'
-                  value={props.product.CMB}
+                  value={props.product.CBM}
+                  keyboardType='numeric'
                   placeholder='0'
                   hideError
-                  onChangeText={setProductProps}/>
+                  onChangeText={setProductProps} />
               </Col>
             </Row>
             <Row>
@@ -137,9 +157,10 @@ const NewProduct
                   modelField='UXB'
                   iconPosition='right'
                   value={props.product.UXB}
+                  keyboardType='numeric'
                   placeholder='0'
                   hideError
-                  onChangeText={setProductProps}/>
+                  onChangeText={setProductProps} />
               </Col>
               <Col style={{paddingLeft: 5}}>
                 <FormInput
@@ -149,18 +170,19 @@ const NewProduct
                   modelField='MOQ'
                   iconPosition='right'
                   value={props.product.MOQ}
+                  keyboardType='numeric'
                   placeholder='0'
                   hideError
-                  onChangeText={setProductProps}/>
+                  onChangeText={setProductProps} />
               </Col>
             </Row>
             <Row>
               <Col style={style.pickerCol}>
                 <Text note style={style.pickerText}>Factory</Text>
                 <Picker
-                  iosHeader="Select a Factory"
-                  prompt="Select a Factory..."
-                  mode="dropdown" 
+                  iosHeader='Select a Factory'
+                  prompt='Select a Factory...'
+                  mode='dropdown'
                   style={style.picker}
                   selectedValue={props.product.factory.id}
                   onValueChange={value => setProductProps(props.factories[value], 'factory')}>
@@ -176,9 +198,9 @@ const NewProduct
               <Col>
                 <Text note style={style.pickerText}>Category</Text>
                 <Picker
-                  iosHeader="Select one"
-                  prompt="Select a Category..."
-                  mode="dropdown"
+                  iosHeader='Select one'
+                  prompt='Select a Category...'
+                  mode='dropdown'
                   style={style.picker}
                   selectedValue={props.product.category.id}
                   onValueChange={value => setProductProps(props.categories[value], 'category')}>
@@ -201,7 +223,7 @@ const NewProduct
                 multiline
                 placeholder='Enter a description...'
                 hideError
-                onChangeText={setProductProps}/>
+                onChangeText={setProductProps} />
             </Row>
           </Grid>
           <Button block
@@ -214,7 +236,7 @@ const NewProduct
           handleNewPicture={handleNewPicture}
           openModal={openModal}
           closeModal={closeModal}
-          modalOpen={modalOpen}/>
+          modalOpen={modalOpen} />
       </View>
     </Container>
   )

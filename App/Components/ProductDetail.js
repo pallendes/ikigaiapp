@@ -1,18 +1,12 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
 import ImgSwiper from './ImgSwiper'
 import { StyleSheet, Dimensions } from 'react-native'
 import { Grid,
   Text,
   Col,
-  Row,
-  Thumbnail,
-  InputGroup,
-  Input,
   Icon,
   Content,
   Container,
-  List,
-  ListItem,
   Button,
   Fab,
   View,
@@ -54,9 +48,9 @@ const ProductDetail = (props) => {
             <Icon name='ios-arrow-back' />
           </Button>
           <Title>Product Detail</Title>
-          <Button transparent>
+          {/* <Button transparent>
             <Icon name='ios-menu' />
-          </Button>
+          </Button> */}
         </Header>
         <Content>
           <ImgSwiper {...props.product} />
@@ -75,7 +69,7 @@ const ProductDetail = (props) => {
                 </Col>
                 <Col>
                   <Text style={style.noteText}>CMB</Text>
-                  <Text>{props.product.CMB}</Text>
+                  <Text>{props.product.CBM}</Text>
                 </Col>
               </Grid>
             </CardItem>
@@ -143,17 +137,17 @@ const ProductDetail = (props) => {
       <Fab
         containerStyle={{ marginLeft: 10 }}
         style={{ backgroundColor: '#5067FF' }}
-        direction="up"
+        direction='up'
         active={props.fabActive}
         onPress={() => props.showFab()}
         >
-        <Icon name="ios-create-outline" />
+        <Icon name='ios-create-outline' />
         <Button style={{backgroundColor: 'red'}}
           onPress={() => props.confirmDeleteProduct(props.product)}>
-          <Icon name="ios-close" />
+          <Icon name='ios-close' />
         </Button>
         <Button style={style.editFab} onPress={() => props.editProduct(props.product)}>
-         <Icon name="md-create" />
+          <Icon name='md-create' />
         </Button>
       </Fab>
     </View>

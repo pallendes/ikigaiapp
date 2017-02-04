@@ -5,21 +5,21 @@ const initialState = {
 }
 
 export const showProducts = (state = initialState, action) => {
-  switch(action.type) {
+  switch (action.type) {
     case SHOW_PRODUCTS:
       return {
         ...state,
-        productList: action.payload,
+        productList: action.payload
       }
     case PERSIST_PRODUCT:
       return {
         ...state,
-        productList: action.payload,
+        productList: action.payload
       }
     case DELETE_PRODUCT:
       return {
         ...state,
-        productList: action.payload,
+        productList: action.payload
       }
     default:
       return state
