@@ -3,7 +3,7 @@ import ProductImages from '../Components/ProductImages'
 import { connect } from 'react-redux'
 import { persistProduct } from '../Actions/ProductActions'
 import { Platform, ToastAndroid } from 'react-native'
-import { navigateTo } from '../Actions/SideBarNav'
+import navigateTo from '../Actions/SideBarNav'
 
 class ProductImagesContainer extends Component {
 
@@ -38,7 +38,7 @@ class ProductImagesContainer extends Component {
   }
 
   deleteSelectedPictures = async () => {
-    const pictures = this.state.pictures.filter(picture => picture.selected).map(picture => picture.uri)
+    const pictures = this.state.pictures.filter(picture => !picture.selected).map(picture => picture.uri)
     const product = {
       ...this.props.product,
       pictures: pictures
