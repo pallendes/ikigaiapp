@@ -10,7 +10,7 @@
     "firebase": "^3.6.5",
     "global": "^4.3.1",
     "immutable": "^3.8.1",
-    "native-base": "^0.5.20",
+    "native-base": "0.5.21",
     "react": "15.4.1",
     "react-native": "0.39.2",
     "react-native-drawer": "^2.3.0",
@@ -41,7 +41,10 @@
     "standard": "*"
   },
   "jest": {
-    "preset": "react-native"
+    "preset": "react-native",
+    "transformIgnorePatterns": [
+      "/node_modules/(?!native-base)/"
+    ]
   },
   "standard": {
     "parser": "babel-eslint",

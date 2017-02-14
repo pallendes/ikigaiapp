@@ -4,7 +4,7 @@
  * @flow
  */
 
-import { AppRegistry } from 'react-native';
-import App from './App/App';
+import { AppRegistry } from 'react-native'
+import App from './App/App'
 
-AppRegistry.registerComponent('Ikigai', () => App);
+AppRegistry.registerComponent('Ikigai', () => App)
